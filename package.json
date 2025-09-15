@@ -19,6 +19,7 @@
     "@tailwindcss/vite": "^4.1.13",
     "@vueuse/core": "^13.9.0",
     "@vueuse/nuxt": "^13.9.0",
+    "effect": "^3.17.13",
     "nuxt": "^4.1.1",
     "nuxt-security": "^2.4.0",
     "reka-ui": "^2.5.0",

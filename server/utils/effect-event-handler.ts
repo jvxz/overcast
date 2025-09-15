@@ -1,0 +1,33 @@
+import type { EventHandlerRequest, H3Error, H3Event } from 'h3'
+import { Cause, Data, Effect, Exit } from 'effect'
+
+type ResponseError = Partial<Omit<H3Error, 'statusMessage'>> & {
+  message: string
+}
+
+class BaseError extends Data.TaggedError<string>('')<ResponseError> { }
+
+export function defineEffectEventHandler<T extends EventHandlerRequest, D, E extends BaseError, R extends never>(program: (event: H3Event<T>) => Effect.Effect<D, E, R>) {
+  return defineEventHandler(async (event) => {
+    const exit = await Effect.runPromiseExit(program(event))
+
+    return Exit.match(exit, {
+      onFailure: (cause) => {
+        if (Cause.isFailType(cause)) {
+          throw createError({
+            data: cause.error.data,
+            message: cause.error.message,
+            statusCode: cause.error.statusCode ?? 500,
+            statusMessage: cause.error._tag,
+          })
+        }
+
+        throw createError({
+          statusCode: 500,
+          statusMessage: 'An unexpected error occurred',
+        })
+      },
+      onSuccess: res => res,
+    })
+  })
+}
