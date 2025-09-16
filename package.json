@@ -16,13 +16,18 @@
     "@nuxt/icon": "^2.0.0",
     "@nuxt/image": "^1.11.0",
     "@nuxtjs/color-mode": "^3.5.2",
+    "@peterbud/nuxt-query": "1.1.0",
     "@tailwindcss/vite": "^4.1.13",
     "@vueuse/core": "^13.9.0",
     "@vueuse/nuxt": "^13.9.0",
+    "browser-id3-writer": "^6.3.1",
+    "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "effect": "^3.17.13",
+    "file-saver": "^2.0.5",
     "nuxt": "^4.1.1",
     "nuxt-security": "^2.4.0",
+    "p-limit": "^7.1.1",
     "reka-ui": "^2.5.0",
     "tailwind-merge": "^3.3.1",
     "tailwindcss": "^4.1.13",
@@ -34,11 +39,17 @@
   "devDependencies": {
     "@antfu/eslint-config": "^5.3.0",
     "@effect/language-service": "^0.40.0",
+    "@types/file-saver": "^2.0.7",
     "@types/node": "^24.5.0",
     "eslint": "^9.35.0",
     "eslint-plugin-better-tailwindcss": "^3.7.8",
     "eslint-plugin-format": "^1.0.1",
     "orval": "^7.11.2",
     "typescript": "^5.9.2"
+  },
+  "pnpm": {
+    "overrides": {
+      "vite": "npm:rolldown-vite@latest"
+    }
   }
 }
