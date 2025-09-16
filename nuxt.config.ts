@@ -31,6 +31,7 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@vueuse/nuxt',
     'nuxt-security',
+    '@peterbud/nuxt-query',
   ],
 
   nitro: {
@@ -59,6 +60,10 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  nuxtQuery: {
+    autoImports: true,
   },
 
   vite: {
