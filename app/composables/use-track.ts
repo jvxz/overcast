@@ -10,7 +10,7 @@ export const useTrack = createSharedComposable(() => {
             url,
           },
         }),
-        $fetch<ReadableStream>('/api/audio', {
+        $fetch<ReadableStream>('/api/track', {
           query: {
             url,
           },
