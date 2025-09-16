@@ -1,0 +1,31 @@
+{
+  "Effect - tagged error with cause and message": {
+    "prefix": [
+      "tecm",
+      "ece"
+    ],
+    "body": [
+      "class ${1:} extends Data.TaggedError(\"${1:}\")<EffectH3Error> {}"
+    ],
+    "description": "Effect - tagged error with cause and message"
+  },
+  "nitro effect event handler": {
+    "prefix": "neh",
+    "body": [
+      "import type { EventHandlerRequest, H3Event } from 'h3'",
+      "import { Data, Effect } from 'effect'",
+      "",
+      "class ${1} extends Data.TaggedError('${1}') <EffectH3Error> {}",
+      "",
+      "function program(event: H3Event<EventHandlerRequest>) {",
+      "  return Effect.gen(function* () {",
+      "",
+      "  })",
+      "}",
+      "",
+      "export default defineEffectEventHandler(program)",
+      ""
+    ],
+    "description": "nitro effect event handler"
+  }
+}

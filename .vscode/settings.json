@@ -56,5 +56,6 @@
     "pcss",
     "postcss"
   ],
-  "iconify.inplace": false
+  "iconify.inplace": false,
+  "typescript.tsdk": "node_modules/typescript/lib"
 }
