@@ -15,13 +15,15 @@ class ScFetchError extends Data.TaggedError('ScFetchError')<EffectH3Error> {}
 
 export function $sc<T>({ endpoint, event, options, schema }: Params<T>) {
   return Effect.gen(function* () {
+    const url = endpoint.startsWith('http') ? endpoint : `${SOUNDCLOUD_API_URL}${endpoint}`
+
     const res = yield* Effect.tryPromise({
       catch: e => new ScFetchError({
         cause: e,
         message: `Failed to get data from URL. Did you provide a valid URL?`,
         statusCode: 500,
       }),
-      try: async () => $fetch(`${SOUNDCLOUD_API_URL}${endpoint}`, {
+      try: async () => $fetch(url, {
         ...options,
         headers: {
           ...options?.headers,
