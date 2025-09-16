@@ -4,6 +4,8 @@ import tailwindcss from '@tailwindcss/vite'
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
+  css: ['~/assets/css/globals.css'],
+
   devtools: { enabled: true },
 
   eslint: {
@@ -13,7 +15,11 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['~/assets/css/globals.css'],
+  imports: {
+    dirs: [
+      '~/server/utils',
+    ],
+  },
 
   modules: [
     '@nuxt/image',
@@ -27,10 +33,32 @@ export default defineNuxtConfig({
     'nuxt-security',
   ],
 
-  imports: {
-    dirs: [
-      '~/server/utils',
-    ],
+  nitro: {
+    imports: {
+      dirs: ['./server/schema/*'],
+      presets: [
+        {
+          from: 'zod',
+          imports: ['z'],
+        },
+      ],
+    },
+    storage: {
+      clientId: {
+        base: 'clientId',
+        driver: 'redis',
+        url: process.env.REDIS_URL,
+      },
+    },
+    typescript: {
+      tsConfig: {
+        compilerOptions: {
+          plugins: [{
+            name: '@effect/language-service',
+          }],
+        },
+      },
+    },
   },
 
   vite: {
@@ -38,5 +66,4 @@ export default defineNuxtConfig({
       tailwindcss(),
     ],
   },
-
 })
