@@ -25,6 +25,7 @@
     "clsx": "^2.1.1",
     "effect": "^3.17.13",
     "file-saver": "^2.0.5",
+    "minio": "^8.0.6",
     "nuxt": "^4.1.1",
     "nuxt-security": "^2.4.0",
     "p-limit": "^7.1.1",
