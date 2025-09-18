@@ -15,12 +15,6 @@ export default defineNuxtConfig({
     },
   },
 
-  imports: {
-    dirs: [
-      '~/server/utils',
-    ],
-  },
-
   modules: [
     '@nuxt/image',
     '@nuxt/eslint',
@@ -36,7 +30,11 @@ export default defineNuxtConfig({
 
   nitro: {
     imports: {
-      dirs: ['./server/schema/*'],
+      dirs: [
+        './server/schema/*',
+        './server/utils/*',
+
+      ],
       presets: [
         {
           from: 'zod',
@@ -45,8 +43,7 @@ export default defineNuxtConfig({
       ],
     },
     storage: {
-      clientId: {
-        base: 'clientId',
+      /* use redis for default storage */ '': {
         driver: 'redis',
         url: process.env.REDIS_URL,
       },
@@ -64,6 +61,18 @@ export default defineNuxtConfig({
 
   nuxtQuery: {
     autoImports: true,
+  },
+
+  runtimeConfig: {
+    minio: {
+      accessKey: process.env.MINIO_ACCESS_KEY,
+      host: process.env.MINIO_PUBLIC_HOST,
+      port: process.env.MINIO_PUBLIC_PORT,
+      secretKey: process.env.MINIO_SECRET_KEY,
+    },
+    redis: {
+      url: process.env.REDIS_URL,
+    },
   },
 
   vite: {
