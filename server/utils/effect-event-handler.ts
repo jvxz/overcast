@@ -1,4 +1,4 @@
-import type { EventHandlerRequest, H3Error, H3Event } from 'h3'
+import type { EventHandler, EventHandlerRequest, H3Error, H3Event } from 'h3'
 import { Cause, Data, Effect, Exit } from 'effect'
 
 export type EffectH3Error = Partial<Omit<H3Error, 'statusMessage'>> & {
@@ -7,12 +7,16 @@ export type EffectH3Error = Partial<Omit<H3Error, 'statusMessage'>> & {
 
 class BaseError extends Data.TaggedError<string>('')<EffectH3Error> { }
 
-export function defineEffectEventHandler<T extends EventHandlerRequest, D, E extends BaseError, R extends never>(program: (event: H3Event<T>) => Effect.Effect<D, E, R>) {
+export function defineEffectEventHandler<T extends EventHandlerRequest, D, E extends BaseError, R extends never>(
+  program: (event: H3Event<T>) => Effect.Effect<D, E, R>,
+): EventHandler<T, Promise<D>> {
   return defineEventHandler(async (event) => {
     const exit = await Effect.runPromiseExit(program(event))
 
     return Exit.match(exit, {
       onFailure: (cause) => {
+        console.error(cause)
+
         if (Cause.isFailType(cause)) {
           throw createError({
             cause: cause.error.cause,
