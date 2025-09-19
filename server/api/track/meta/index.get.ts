@@ -11,13 +11,12 @@ function program(event: H3Event<EventHandlerRequest>) {
 
     return yield* $sc({
       endpoint: '/resolve',
-      event,
       options: {
         params: {
           url,
         },
       },
-      schema: TrackDataSchema,
+      schema: TrackSchema,
     })
   })
 }

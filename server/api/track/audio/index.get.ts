@@ -32,7 +32,6 @@ function program(event: H3Event<EventHandlerRequest>) {
 
     const { url: playlistUrl } = yield* $sc({
       endpoint: audioUrl,
-      event,
       options: {
         params: {
           response_format: 'm3u8',
@@ -45,7 +44,6 @@ function program(event: H3Event<EventHandlerRequest>) {
 
     const m3u8 = yield* $sc({
       endpoint: playlistUrl,
-      event,
       options: {
         responseType: 'text',
       },

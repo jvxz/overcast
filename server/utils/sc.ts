@@ -1,9 +1,7 @@
-import type { H3Event } from 'h3'
 import type { z } from 'zod'
 import { Data, Effect, pipe } from 'effect'
 
 interface Params<T> {
-  event: H3Event
   endpoint: string
   options?: Parameters<typeof $fetch>[1]
   schema: z.ZodType<T>
