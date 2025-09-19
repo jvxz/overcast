@@ -19,17 +19,11 @@ function program(event: H3Event<EventHandlerRequest>) {
         })
       },
       try: async () => {
-        const { minio: minioCreds } = useRuntimeConfig()
-
         const minio = new Minio.Client({
-          accessKey: minioCreds.accessKey,
-          endPoint: minioCreds.host,
-          pathStyle: true,
-          port: Number(minioCreds.port),
-          region: 'us-east-1',
-          secretKey: minioCreds.secretKey,
-          transportAgent: undefined,
-          useSSL: Number(minioCreds.port) === 443,
+          accessKey: process.env.MINIO_ACCESS_KEY,
+          endPoint: process.env.MINIO_PUBLIC_HOST!,
+          port: Number(process.env.MINIO_PUBLIC_PORT),
+          secretKey: process.env.MINIO_SECRET_KEY,
         })
 
         event.context.minio = minio

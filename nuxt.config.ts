@@ -63,18 +63,6 @@ export default defineNuxtConfig({
     autoImports: true,
   },
 
-  runtimeConfig: {
-    minio: {
-      accessKey: process.env.MINIO_ACCESS_KEY,
-      host: process.env.MINIO_PUBLIC_HOST,
-      port: process.env.MINIO_PUBLIC_PORT,
-      secretKey: process.env.MINIO_SECRET_KEY,
-    },
-    redis: {
-      url: process.env.REDIS_URL,
-    },
-  },
-
   vite: {
     plugins: [
       tailwindcss(),
