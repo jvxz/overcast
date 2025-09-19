@@ -15,6 +15,10 @@ function program(event: H3Event<EventHandlerRequest>) {
   return Effect.gen(function* () {
     const { url } = yield* validateQueryEffect(event, QuerySchema)
 
+    const { setProgress, setState } = useState()
+
+    yield* Effect.promise(async () => setState('downloading'))
+
     const trackData = yield* Effect.tryPromise({
       catch: e => new TrackAudioError({
         cause: e,
@@ -55,12 +59,8 @@ function program(event: H3Event<EventHandlerRequest>) {
       .filter(line => line && !line.startsWith('#'))
       .map(segment => new URL(segment, audioUrl).toString())
 
-    const { resetProgress, setProgress, setState } = useState()
-
     const coreStream = new ReadableStream({
       start: async (controller) => {
-        await setState('downloading')
-
         let localProgress = 0
 
         const chunks: {
@@ -96,9 +96,6 @@ function program(event: H3Event<EventHandlerRequest>) {
           controller.enqueue(chunk.chunk)
         }
 
-        await resetProgress()
-        await setState('idle')
-
         controller.close()
       },
     })
@@ -127,12 +124,16 @@ function program(event: H3Event<EventHandlerRequest>) {
       try: async () => event.context.minio.presignedGetObject('overcast', `cache/${filename}`, PRESIGNED_URL_EXPIRATION),
     })
 
-    // add track to cache in the background
-    yield* Effect.forkDaemon(Effect.gen(function* () {
-      const { addTrackToCache } = useTrackCacheStorage()
+    if (useAppConfig().trackCaching) {
+      // add track to cache in the background
+      yield* Effect.forkDaemon(Effect.gen(function* () {
+        const { addTrackToCache } = useTrackCacheStorage()
 
-      yield* Effect.promise(async () => addTrackToCache(url, presignedUrl))
-    }))
+        yield* Effect.promise(async () => addTrackToCache(url, presignedUrl))
+      }))
+    }
+
+    yield* Effect.promise(async () => setState('idle'))
 
     return presignedUrl
   })
