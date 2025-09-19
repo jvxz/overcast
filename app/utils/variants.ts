@@ -16,8 +16,8 @@ export const buttonVariants = cva(
         sm: interactiveStyles.size.sm,
       },
       variant: {
-        default: interactiveStyles.variant.default,
         danger: interactiveStyles.variant.danger,
+        default: interactiveStyles.variant.default,
         ghost: interactiveStyles.variant.ghost,
         link: interactiveStyles.variant.link,
         outline: interactiveStyles.variant.outline,
@@ -35,8 +35,8 @@ export const badgeVariants = cva(
     },
     variants: {
       variant: {
-        default: `${interactiveStyles.variant.default}`,
         danger: `${interactiveStyles.variant.danger}`,
+        default: `${interactiveStyles.variant.default}`,
         ghost: `${interactiveStyles.variant.ghost}`,
         outline: `${interactiveStyles.variant.outline}`,
       },
@@ -61,3 +61,19 @@ export const avatarVariant = cva(
   },
 )
 export type AvatarVariants = VariantProps<typeof avatarVariant>
+
+export const alertVariants = cva(
+  `${staticStyles.base} relative grid w-full grid-cols-[0_1fr] items-start gap-y-1 py-3 has-[>svg]:grid-cols-[calc(var(--spacing)*4)_1fr] has-[>svg]:gap-x-3 [&>svg]:size-4 [&>svg]:translate-y-1 [&>svg]:text-foreground`,
+  {
+    defaultVariants: {
+      variant: 'default',
+    },
+    variants: {
+      variant: {
+        danger: `${staticStyles.variant.danger} *:data-[slot=alert-description]:text-danger/80`,
+        default: staticStyles.variant.default,
+      },
+    },
+  },
+)
+export type AlertVariants = VariantProps<typeof alertVariants>
