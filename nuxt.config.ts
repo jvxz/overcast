@@ -15,6 +15,12 @@ export default defineNuxtConfig({
     },
   },
 
+  fonts: {
+    defaults: {
+      weights: [400, 500, 700],
+    },
+  },
+
   modules: [
     '@nuxt/image',
     '@nuxt/eslint',
@@ -43,7 +49,7 @@ export default defineNuxtConfig({
       ],
     },
     storage: {
-      /* use redis for default storage */ '': {
+      'track-cache': {
         driver: 'redis',
         url: process.env.REDIS_URL,
       },
