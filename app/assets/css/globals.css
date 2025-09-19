@@ -22,8 +22,8 @@
   --color-muted-foreground: var(--muted-foreground);
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
@@ -94,8 +94,8 @@
   --muted-foreground: hsl(223.8136 0% 40.3067%);
   --accent: hsl(223.8136 0.0001% 92.1478%);
   --accent-foreground: hsl(0 0% 10%);
-  --destructive: hsl(358.4334 74.912% 70.7455%);
-  --destructive-foreground: hsl(223.8136 -172.5242% 100%);
+  --danger: hsl(358.4334 74.912% 70.7455%);
+  --danger-foreground: hsl(223.8136 -172.5242% 100%);
   --border: hsl(223.8136 0.0001% 87.5577%);
   --input: hsl(223.8136 0.0001% 92.1478%);
   --ring: hsl(0 0% 0%);
@@ -120,8 +120,8 @@
   --muted-foreground: hsl(223.8136 0% 64.471%);
   --accent: hsl(223.8136 0% 19.8916%);
   --accent-foreground: hsl(223.8136 -172.5242% 100%);
-  --destructive: hsl(359.9132 100.2494% 67.8807%);
-  --destructive-foreground: hsl(0 0% 98%);
+  --danger: hsl(359.9132 100.2494% 67.8807%);
+  --danger-foreground: hsl(0 0% 98%);
   --border: hsl(223.8136 0% 14.0871%);
   --input: hsl(223.8136 0% 19.8916%);
   --ring: hsl(223.8136 0% 64.471%);

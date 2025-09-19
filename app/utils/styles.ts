@@ -1,5 +1,5 @@
 const interactiveStyles = {
-  base: 'cursor-pointer font-medium focus-visible:border-primary/50 select-none focus-visible:ring-ring/40 focus-visible:ring-[3px] active:ring-ring/60 aria-invalid:ring-destructive/20 aria-invalid:border-destructive dark:aria-invalid:ring-destructive/40 shrink-0 gap-2 rounded text-base whitespace-nowrap outline-none disabled:pointer-events-none hover:disabled:cursor-not-allowed disabled:opacity-50 underline-offset-4 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:size-4 active:scale-[97%] transition-transform duration-100',
+  base: 'cursor-pointer font-medium focus-visible:border-primary/50 select-none focus-visible:ring-ring/40 focus-visible:ring-[3px] active:ring-ring/60 aria-invalid:ring-danger/20 aria-invalid:border-danger dark:aria-invalid:ring-danger/40 shrink-0 gap-2 rounded text-base whitespace-nowrap outline-none disabled:pointer-events-none hover:disabled:cursor-not-allowed disabled:opacity-50 underline-offset-4 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg]:size-4 active:scale-[97%] transition-transform duration-100',
   size: {
     default: 'h-8 px-3 py-1.5 text-sm',
     icon: 'aspect-square size-8',
@@ -9,8 +9,8 @@ const interactiveStyles = {
   variant: {
     default:
       'bg-primary/85 border hover:bg-primary/90 border-primary active:bg-primary/85 text-primary-foreground glow-primary',
-    destructive:
-      'hover:bg-destructive/90 bg-destructive/90 text-destructive-foreground hover:bg-destructive active:bg-destructive glow-red-500 border-destructive',
+    danger:
+      'hover:bg-danger/90 bg-danger/90 text-danger-foreground hover:bg-danger active:bg-danger glow-red-500 border-danger',
     ghost: 'hover:bg-muted/90 active:bg-muted/80 text-muted-foreground hover:text-foreground',
     link: 'text-primary underline-offset-4 hover:underline',
     outline:
@@ -24,8 +24,8 @@ const staticStyles = {
   variant: {
     default:
       'bg-card shadow-[0px_-1px_0px_0px_hsl(from_var(--muted-foreground)_h_s_l/0.40),0px_1px_0px_0px_hsl(from_var(--muted)_h_s_l),0_8px_16px_hsl(from_var(--background)_h_s_l/0.35)] border border-y-0 text-card-foreground',
-    destructive:
-      'bg-card border-destructive text-destructive border [&>svg]:text-current',
+    danger:
+      'bg-card border-danger text-danger border [&>svg]:text-current',
   },
 }
 
@@ -39,7 +39,7 @@ const popoverStyles = {
     interactiveStyles.base,
     interactiveStyles.variant.ghost,
     interactiveStyles.size.default,
-    'focus:bg-muted focus:text-accent-foreground [&_svg:not([class*=\'text-\'])]:text-muted-foreground [&_svg:not([class*=\'size-\'])]:size-12 data-[variant=destructive]:text-destructive-foreground data-[variant=destructive]:focus:bg-destructive/10 data-[variant=destructive]:focus:text-destructive-foreground data-[variant=destructive]:*:[svg]:!text-destructive-foreground dark:data-[variant=destructive]:focus:bg-destructive/40 relative flex cursor-default items-center p-1 px-2 text-sm outline-hidden transition-all select-none focus-visible:ring-0 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0',
+    'focus:bg-muted focus:text-accent-foreground [&_svg:not([class*=\'text-\'])]:text-muted-foreground [&_svg:not([class*=\'size-\'])]:size-12 data-[variant=danger]:text-danger-foreground data-[variant=danger]:focus:bg-danger/10 data-[variant=danger]:focus:text-danger-foreground data-[variant=danger]:*:[svg]:!text-danger-foreground dark:data-[variant=danger]:focus:bg-danger/40 relative flex cursor-default items-center p-1 px-2 text-sm outline-hidden transition-all select-none focus-visible:ring-0 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 data-[inset]:pl-8 [&_svg]:pointer-events-none [&_svg]:shrink-0',
   ],
 }
 

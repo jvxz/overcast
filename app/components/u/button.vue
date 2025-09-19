@@ -5,7 +5,7 @@ interface ButtonProps {
   asChild?: boolean
   disabled?: boolean
   size?: 'default' | 'icon' | 'lg' | 'sm'
-  variant?: 'default' | 'destructive' | 'ghost' | 'link' | 'outline' | 'soft'
+  variant?: 'default' | 'danger' | 'ghost' | 'link' | 'outline' | 'soft'
   class?: string
   isLoading?: boolean
 }

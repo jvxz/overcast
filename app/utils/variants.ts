@@ -17,7 +17,7 @@ export const buttonVariants = cva(
       },
       variant: {
         default: interactiveStyles.variant.default,
-        destructive: interactiveStyles.variant.destructive,
+        danger: interactiveStyles.variant.danger,
         ghost: interactiveStyles.variant.ghost,
         link: interactiveStyles.variant.link,
         outline: interactiveStyles.variant.outline,
@@ -36,7 +36,7 @@ export const badgeVariants = cva(
     variants: {
       variant: {
         default: `${interactiveStyles.variant.default}`,
-        destructive: `${interactiveStyles.variant.destructive}`,
+        danger: `${interactiveStyles.variant.danger}`,
         ghost: `${interactiveStyles.variant.ghost}`,
         outline: `${interactiveStyles.variant.outline}`,
       },
