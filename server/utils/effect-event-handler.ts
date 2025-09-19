@@ -14,8 +14,11 @@ export function defineEffectEventHandler<T extends EventHandlerRequest, D, E ext
     const exit = await Effect.runPromiseExit(program(event))
 
     return Exit.match(exit, {
-      onFailure: (cause) => {
+      onFailure: async (cause) => {
         console.error(cause)
+
+        // reset progress on error
+        useState().resetProgress()
 
         if (Cause.isFailType(cause)) {
           throw createError({

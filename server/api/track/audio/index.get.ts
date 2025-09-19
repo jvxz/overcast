@@ -55,8 +55,14 @@ function program(event: H3Event<EventHandlerRequest>) {
       .filter(line => line && !line.startsWith('#'))
       .map(segment => new URL(segment, audioUrl).toString())
 
+    const { resetProgress, setProgress, setState } = useState()
+
     const coreStream = new ReadableStream({
       start: async (controller) => {
+        await setState('downloading')
+
+        let localProgress = 0
+
         const chunks: {
           chunk: Uint8Array
           index: number
@@ -73,6 +79,8 @@ function program(event: H3Event<EventHandlerRequest>) {
           while (true) {
             const { done, value } = await reader.read()
             if (done) {
+              localProgress++
+              setProgress(localProgress / segments.length)
               break
             }
 
@@ -87,6 +95,9 @@ function program(event: H3Event<EventHandlerRequest>) {
         for (const chunk of sortedChunks) {
           controller.enqueue(chunk.chunk)
         }
+
+        await resetProgress()
+        await setState('idle')
 
         controller.close()
       },

@@ -9,15 +9,15 @@ export function getCachedTrackUrl(trackUrl: string) {
 
 export function useTrackCacheStorage() {
   async function addTrackToCache(trackUrl: string, presignedUrl: string) {
-    const storage = useStorage<string>(trackUrl)
+    const storage = useStorage<string>('track-cache')
 
-    return Promise.all([storage.setItem('url', presignedUrl), storage.setItem('created-at', new Date().toISOString())])
+    return Promise.all([storage.setItem(`${trackUrl}:url`, presignedUrl), storage.setItem(`${trackUrl}:created-at`, new Date().toISOString())])
   }
 
   async function getTrackFromCache(trackUrl: string) {
-    const storage = useStorage<string>(trackUrl)
+    const storage = useStorage<string>('track-cache')
 
-    return storage.getItem('url')
+    return storage.getItem(`${trackUrl}:url`)
   }
 
   return {

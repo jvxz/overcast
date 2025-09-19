@@ -8,13 +8,15 @@ function handleSubmit() {
     downloadTrack(trackUrl.value)
   }
 }
+
+const { serverState, serverStateData } = useServerState()
 </script>
 
 <template>
   <div class="flex h-screen flex-col items-center justify-center gap-4">
     <div class="flex w-xl flex-col gap-4">
       <div class="flex-1" />
-      <UCard class="w-full shrink-0 flex-row gap-2 p-2">
+      <UCard class="w-full shrink-0 flex-col gap-2 p-2 px-4">
         <form
           class="flex w-full items-center gap-3"
           @submit.prevent="handleSubmit"
@@ -22,27 +24,35 @@ function handleSubmit() {
           <UInput
             v-model="trackUrl"
             placeholder="Enter a track URL"
-            class="border-none bg-transparent px-0 pl-3 shadow-none"
+            class="border-none bg-transparent px-0 shadow-none"
           />
           <UButton
             :disabled="!trackUrl"
             :is-loading="isDownloadingTrack"
             size="icon"
             variant="ghost"
+            class="translate-x-2 px-0"
           >
             <Icon name="tabler:arrow-right" />
           </UButton>
         </form>
+        <p>{{ serverState }}</p>
+        <p>{{ serverStateData }}</p>
+        <!-- <div class="flex gap-2 font-mono">
+          <UButton variant="ghost">
+            artist
+          </UButton>
+        </div> -->
       </UCard>
       <div class="flex-1">
-        <UAlertRoot v-if="trackUrl">
+        <!-- <UAlertRoot v-if="trackUrl">
           <UAlertTitle>
             Track downloaded successfully
           </UAlertTitle>
           <UAlertDescription>
             The track has been downloaded successfully.
           </UAlertDescription>
-        </UAlertRoot>
+        </UAlertRoot> -->
       </div>
     </div>
   </div>

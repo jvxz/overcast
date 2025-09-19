@@ -11,9 +11,14 @@ function program(event: H3Event<EventHandlerRequest>) {
   return Effect.gen(function* () {
     const { url: trackUrl } = yield* validateQueryEffect(event, QuerySchema)
 
+    const { setState } = useState()
+    yield* Effect.promise(async () => setState('downloading'))
+
     const cachedTrackUrl = yield* getCachedTrackUrl(trackUrl)
 
     if (cachedTrackUrl) {
+      yield* Effect.promise(async () => setState('idle'))
+
       return cachedTrackUrl
     }
 
