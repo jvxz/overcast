@@ -1,6 +1,5 @@
 FROM node:22-alpine AS build
 
-ARG RAILWAY_ENVIRONMENT
 
 WORKDIR /app
 
@@ -12,9 +11,11 @@ RUN pnpm i
 
 COPY . ./
 
+ARG REDIS_URL
 RUN pnpm run build
 
 FROM node:22-alpine
+
 WORKDIR /app
 
 COPY --from=build /app/.output/ ./
