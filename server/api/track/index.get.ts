@@ -11,7 +11,8 @@ function program(event: H3Event<EventHandlerRequest>) {
   return Effect.gen(function* () {
     const { url: trackUrl } = yield* validateQueryEffect(event, QuerySchema)
 
-    const { setState } = useState()
+    const { resetProgress, setState } = useState()
+    yield* Effect.promise(async () => resetProgress())
     yield* Effect.promise(async () => setState('downloading'))
 
     const cachedTrackUrl = yield* getCachedTrackUrl(trackUrl)
