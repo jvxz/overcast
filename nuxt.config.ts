@@ -58,6 +58,10 @@ export default defineNuxtConfig({
       ],
     },
     storage: {
+      'client-id': {
+        driver: 'redis',
+        url: process.env.REDIS_URL,
+      },
       'track-cache': {
         driver: 'redis',
         url: process.env.REDIS_URL,
