@@ -1,10 +1,8 @@
-import { Effect } from 'effect'
-
 /**
  * @returns string if track is cached, otherwise null
  */
 export function getCachedTrackUrl(trackUrl: string) {
-  return Effect.promise(async () => useTrackCacheStorage().getTrackFromCache(trackUrl))
+  return useTrackCacheStorage().getTrackFromCache(trackUrl)
 }
 
 export function useTrackCacheStorage() {
