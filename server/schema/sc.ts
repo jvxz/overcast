@@ -5,10 +5,10 @@ export const SoundCloudUrlSchema = z.url({
   hostname: /^(on.)?soundcloud.com$/,
 }).transform((hostname) => {
   if (hostname === 'on.soundcloud.com') {
-    return fetch(hostname).then(redirectRes => redirectRes.url)
+    return fetch(hostname).then(redirectRes => removeSearchParams(redirectRes.url))
   }
 
-  return hostname
+  return removeSearchParams(hostname)
 })
 
 export type UserData = z.infer<typeof UserSchema>

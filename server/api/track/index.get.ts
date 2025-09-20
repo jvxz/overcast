@@ -1,41 +1,26 @@
-import type { EventHandlerRequest, H3Event } from 'h3'
-import { Data, Effect } from 'effect'
-
-class TrackAudioError extends Data.TaggedError('TrackAudioError')<EffectH3Error> { }
-
 const QuerySchema = z.object({
   url: SoundCloudUrlSchema,
 })
 
-function program(event: H3Event<EventHandlerRequest>) {
-  return Effect.gen(function* () {
-    const { url: trackUrl } = yield* validateQueryEffect(event, QuerySchema)
+export default defineEventHandler(async (event) => {
+  const { url: trackUrl } = await validateQueryZod(event, QuerySchema)
 
-    const { setState } = useState()
-    yield* Effect.promise(async () => setState('downloading'))
+  const { resetProgress, setState } = useState()
 
-    const cachedTrackUrl = yield* getCachedTrackUrl(trackUrl)
+  await resetProgress()
+  await setState('downloading')
 
-    if (cachedTrackUrl) {
-      yield* Effect.promise(async () => setState('idle'))
+  const cachedTrackUrl = await getCachedTrackUrl(trackUrl)
 
-      return cachedTrackUrl
-    }
+  if (cachedTrackUrl) {
+    await setState('idle')
 
-    return yield* Effect.tryPromise({
-      catch: e => new TrackAudioError({
-        cause: e,
-        message: 'An error occurred while fetching the audio stream',
-        statusCode: 500,
-      }),
-      try: async () => event.$fetch('/api/track/audio', {
-        query: {
-          clientId: event.context.clientId,
-          url: trackUrl,
-        },
-      }),
-    })
+    return cachedTrackUrl
+  }
+
+  return $fetch('/api/track/audio', {
+    query: {
+      url: trackUrl,
+    },
   })
-}
-
-export default defineEffectEventHandler(program)
+})

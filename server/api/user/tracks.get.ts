@@ -1,39 +1,14 @@
-import type { EventHandlerRequest, H3Event } from 'h3'
-import { Effect } from 'effect'
-
 const QuerySchema = z.object({
   nextHref: z.string().nullable(),
   url: SoundCloudUrlSchema,
 })
 
-function program(event: H3Event<EventHandlerRequest>) {
-  return Effect.gen(function* () {
-    const { nextHref, url } = yield* validateQueryEffect(event, QuerySchema)
+export default defineEventHandler(async (event) => {
+  const { nextHref, url } = await validateQueryZod(event, QuerySchema)
 
-    if (nextHref) {
-      return yield* $sc({
-        endpoint: nextHref,
-        options: {
-          params: {
-            linked_partitioning: true,
-          },
-        },
-        schema: UserTracksSchema,
-      })
-    }
-
-    const user = yield* $sc({
-      endpoint: '/resolve',
-      options: {
-        params: {
-          url,
-        },
-      },
-      schema: UserSchema,
-    })
-
-    const userTracks = yield* $sc({
-      endpoint: `/users/${user.id}/tracks`,
+  if (nextHref) {
+    return $sc({
+      endpoint: nextHref,
       options: {
         params: {
           linked_partitioning: true,
@@ -41,9 +16,27 @@ function program(event: H3Event<EventHandlerRequest>) {
       },
       schema: UserTracksSchema,
     })
+  }
 
-    return userTracks
+  const user = await $sc({
+    endpoint: '/resolve',
+    options: {
+      params: {
+        url,
+      },
+    },
+    schema: UserSchema,
   })
-}
 
-export default defineEffectEventHandler(program)
+  const userTracks = await $sc({
+    endpoint: `/users/${user.id}/tracks`,
+    options: {
+      params: {
+        linked_partitioning: true,
+      },
+    },
+    schema: UserTracksSchema,
+  })
+
+  return userTracks
+})

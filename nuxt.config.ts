@@ -2,6 +2,15 @@ import tailwindcss from '@tailwindcss/vite'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
+  app: {
+    head: {
+      htmlAttrs: {
+        style: 'background-color: var(--color-background);',
+      },
+      title: 'overcast',
+    },
+  },
+
   compatibilityDate: '2025-07-15',
 
   css: ['~/assets/css/globals.css'],
@@ -52,15 +61,6 @@ export default defineNuxtConfig({
       'track-cache': {
         driver: 'redis',
         url: process.env.REDIS_URL,
-      },
-    },
-    typescript: {
-      tsConfig: {
-        compilerOptions: {
-          plugins: [{
-            name: '@effect/language-service',
-          }],
-        },
       },
     },
   },

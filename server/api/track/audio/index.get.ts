@@ -1,142 +1,114 @@
-import type { EventHandlerRequest, H3Event } from 'h3'
 import { Readable } from 'node:stream'
-import { Data, Effect } from 'effect'
 import p from 'p-limit'
 
 const limit = p(10)
-
-class TrackAudioError extends Data.TaggedError('TrackAudioError') <EffectH3Error> {}
 
 const QuerySchema = z.object({
   url: SoundCloudUrlSchema,
 })
 
-function program(event: H3Event<EventHandlerRequest>) {
-  return Effect.gen(function* () {
-    const { url } = yield* validateQueryEffect(event, QuerySchema)
+export default defineEventHandler(async (event) => {
+  const { url } = await validateQueryZod(event, QuerySchema)
 
-    const trackData = yield* Effect.tryPromise({
-      catch: e => new TrackAudioError({
-        cause: e,
-        message: 'Failed to get track data',
-        statusCode: 500,
-      }),
-      try: async () => event.$fetch('/api/track/meta', {
-        query: {
-          url,
-        },
-      }),
-    })
+  const { setProgress, setState } = useState()
 
-    const audioUrl = yield* getAudioUrl(trackData)
+  await setState('downloading')
 
-    const { url: playlistUrl } = yield* $sc({
-      endpoint: audioUrl,
-      options: {
-        params: {
-          response_format: 'm3u8',
-        },
+  const trackData = await $fetch('/api/track/meta', {
+    query: {
+      url,
+    },
+  })
+
+  const audioUrl = getAudioUrl(trackData)
+
+  const { url: playlistUrl } = await $sc({
+    endpoint: audioUrl,
+    options: {
+      params: {
+        response_format: 'm3u8',
       },
-      schema: z.object({
-        url: z.url(),
-      }),
-    })
+    },
+    schema: z.object({
+      url: z.url(),
+    }),
+  })
 
-    const m3u8 = yield* $sc({
-      endpoint: playlistUrl,
-      options: {
-        responseType: 'text',
-      },
-      schema: z.string(),
-    })
+  const m3u8 = await $sc({
+    endpoint: playlistUrl,
+    options: {
+      responseType: 'text',
+    },
+    schema: z.string(),
+  })
 
-    const segments = m3u8
-      .split('\n')
-      .filter(line => line && !line.startsWith('#'))
-      .map(segment => new URL(segment, audioUrl).toString())
+  const segments = m3u8
+    .split('\n')
+    .filter(line => line && !line.startsWith('#'))
+    .map(segment => new URL(segment, audioUrl).toString())
 
-    const { resetProgress, setProgress, setState } = useState()
+  const coreStream = new ReadableStream({
+    start: async (controller) => {
+      let localProgress = 0
 
-    const coreStream = new ReadableStream({
-      start: async (controller) => {
-        await setState('downloading')
+      const chunks: {
+        chunk: Uint8Array
+        index: number
+      }[] = []
 
-        let localProgress = 0
+      const procedures = segments.map(async (segment, index) => limit(async () => {
+        const res = await fetch(segment)
+        const reader = res.body?.getReader()
 
-        const chunks: {
-          chunk: Uint8Array
-          index: number
-        }[] = []
-
-        const procedures = segments.map(async (segment, index) => limit(async () => {
-          const res = await fetch(segment)
-          const reader = res.body?.getReader()
-
-          if (!reader) {
-            throw new Error('No reader found in segment response')
-          }
-
-          while (true) {
-            const { done, value } = await reader.read()
-            if (done) {
-              localProgress++
-              setProgress(localProgress / segments.length)
-              break
-            }
-
-            chunks.push({ chunk: value, index })
-          }
-        }))
-
-        await Promise.all(procedures)
-
-        const sortedChunks = chunks.sort((a, b) => a.index - b.index)
-
-        for (const chunk of sortedChunks) {
-          controller.enqueue(chunk.chunk)
+        if (!reader) {
+          throw new Error('No reader found in segment response')
         }
 
-        await resetProgress()
-        await setState('idle')
+        while (true) {
+          const { done, value } = await reader.read()
+          if (done) {
+            localProgress++
+            setProgress(localProgress / segments.length)
+            break
+          }
 
-        controller.close()
-      },
-    })
+          chunks.push({ chunk: value, index })
+        }
+      }))
 
-    const transformStream = coreStream.pipeThrough(
-      transformAudio(trackData),
-    )
+      await Promise.all(procedures)
 
-    const filename = getTrackFilename(trackData)
+      const sortedChunks = chunks.sort((a, b) => a.index - b.index)
 
-    yield* Effect.tryPromise({
-      catch: e => new TrackAudioError({
-        cause: e,
-        message: 'Failed to put object',
-        statusCode: 500,
-      }),
-      try: async () => event.context.minio.putObject('overcast', `cache/${filename}`, Readable.fromWeb(transformStream as import('node:stream/web').ReadableStream)),
-    })
+      for (const chunk of sortedChunks) {
+        controller.enqueue(chunk.chunk)
+      }
 
-    const presignedUrl = yield* Effect.tryPromise({
-      catch: e => new TrackAudioError({
-        cause: e,
-        message: 'Failed to get presigned URL',
-        statusCode: 500,
-      }),
-      try: async () => event.context.minio.presignedGetObject('overcast', `cache/${filename}`, PRESIGNED_URL_EXPIRATION),
-    })
+      controller.close()
+    },
+  })
+
+  const transformStream = coreStream.pipeThrough(
+    transformAudio(trackData),
+  )
+
+  const filename = getTrackFilename(trackData)
+
+  await event.context.minio.putObject('overcast', `cache/${filename}`, Readable.fromWeb(transformStream as import('node:stream/web').ReadableStream))
+
+  const presignedUrl = await event.context.minio.presignedGetObject('overcast', `cache/${filename}`, PRESIGNED_URL_EXPIRATION)
+
+  if (useAppConfig().trackCaching) {
+    const { addTrackToCache } = useTrackCacheStorage()
 
     // add track to cache in the background
-    yield* Effect.forkDaemon(Effect.gen(function* () {
-      const { addTrackToCache } = useTrackCacheStorage()
+    addTrackToCache(url, presignedUrl)
+  }
 
-      yield* Effect.promise(async () => addTrackToCache(url, presignedUrl))
-    }))
+  await setState('idle')
 
-    return presignedUrl
-  })
-}
+  return presignedUrl
+})
 
 function transformAudio(trackMeta: TrackData) {
   const chunks: Uint8Array[] = []
@@ -155,5 +127,3 @@ function transformAudio(trackMeta: TrackData) {
     },
   })
 }
-
-export default defineEffectEventHandler(program)
