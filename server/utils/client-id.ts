@@ -1,64 +1,48 @@
-import { Data, Effect, pipe } from 'effect'
-
-class ClientIdError extends Data.TaggedError('ClientIdError') <EffectH3Error> {}
-
 const message = 'Failed to refresh client ID. Please try again later, or contact support if the problem persists'
 
-export function getFreshClientId() {
-  return Effect.gen(function* () {
-    const res = yield* Effect.tryPromise({
-      catch: e => new ClientIdError({
-        cause: e,
-        message,
-        statusCode: 500,
-      }),
-      try: async () => await fetch('https://soundcloud.com/'),
+export async function getFreshClientId() {
+  const res = await fetch('https://soundcloud.com/')
+
+  const html = await res.text()
+
+  const urls = html.match(
+    /https:\/\/a-v2\.sndcdn\.com\/assets\/\d+-[a-f0-9]+\.js/g,
+  )
+
+  if (!urls?.length) {
+    throw createError({
+      message,
+      statusCode: 500,
     })
+  }
 
-    const html = yield* Effect.promise(() => res.text())
+  const freshClientId = await Promise.any(urls.map(getClientIdFromUrl))
 
-    const urls = yield* pipe(
-      Effect.fromNullable(html.match(
-        /https:\/\/a-v2\.sndcdn\.com\/assets\/\d+-[a-f0-9]+\.js/g,
-      )),
-      Effect.mapError(e => new ClientIdError({
-        cause: e,
-        message,
-        statusCode: 500,
-      })),
-    )
+  if (!freshClientId) {
+    throw createError({
+      message,
+      statusCode: 500,
+    })
+  }
 
-    const freshClientId = yield* Effect.firstSuccessOf(urls.map(getClientIdFromUrl))
+  await useClientId().setClientId(freshClientId)
 
-    yield* Effect.promise(() => useClientId().setClientId(freshClientId))
-
-    return freshClientId
-  })
+  return freshClientId
 }
 
-function getClientIdFromUrl(url: string) {
-  return Effect.gen(function* () {
-    const res = yield* Effect.tryPromise({
-      catch: e => new ClientIdError({
-        cause: e,
-        message,
-        statusCode: 500,
-      }),
-      try: async () => await fetch(url),
-    })
+async function getClientIdFromUrl(url: string) {
+  const res = await fetch(url)
 
-    const clientId = yield* pipe(
-      Effect.promise(async () => await res.text()),
-      Effect.flatMap(text => Effect.fromNullable(text.match(/client_id:"([A-Z0-9]+)"/i))),
-      Effect.mapError(e => new ClientIdError({
-        cause: e,
-        message,
-        statusCode: 500,
-      })),
-    )
+  const html = await res.text()
 
-    return clientId[1]
-  })
+  const clientId = html.match(/client_id:"([A-Z0-9]+)"/i)
+
+  if (!clientId?.[1]) {
+    // eslint-disable-next-line prefer-promise-reject-errors
+    return Promise.reject()
+  }
+
+  return clientId[1]
 }
 
 export function useClientId() {
