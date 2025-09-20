@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
       params: {
         url,
       },
+      retry: false,
     },
     schema: TrackSchema,
   })

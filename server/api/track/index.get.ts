@@ -22,5 +22,6 @@ export default defineEventHandler(async (event) => {
     query: {
       url: trackUrl,
     },
+    retry: false,
   })
 })

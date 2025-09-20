@@ -5,6 +5,7 @@ export const useTrack = createSharedComposable(() => {
       query: {
         url: trackUrl,
       },
+      retry: false,
     }),
     onSuccess: url => downloadFile(url),
   })
