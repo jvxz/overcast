@@ -59,6 +59,7 @@ export default defineNuxtConfig({
     },
     storage: {
       'client-id': {
+        base: 'client-id',
         driver: 'redis',
         url: process.env.REDIS_URL,
       },

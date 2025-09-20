@@ -46,7 +46,7 @@ async function getClientIdFromUrl(url: string) {
 }
 
 export function useClientId() {
-  const storage = useStorage<string>('clientId')
+  const storage = useStorage<string>('client-id')
 
   return {
     getClientId: async () => storage.getItem('value'),
