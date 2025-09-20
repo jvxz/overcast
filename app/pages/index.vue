@@ -10,13 +10,15 @@ function handleSubmit() {
 }
 
 const { serverState, serverStateData } = useServerState()
+
+const progress = computed(() => serverState.value === 'downloading' ? Math.round(Number(serverStateData.value) * 100) : 0)
 </script>
 
 <template>
   <div class="flex h-screen flex-col items-center justify-center gap-4">
     <div class="flex w-xl flex-col gap-4">
       <div class="flex-1" />
-      <UCard class="w-full shrink-0 flex-col gap-2 p-2 px-4">
+      <UCard class="relative w-full shrink-0 flex-col gap-2 overflow-hidden p-2 px-4">
         <form
           class="flex w-full items-center gap-3"
           @submit.prevent="handleSubmit"
@@ -36,8 +38,7 @@ const { serverState, serverStateData } = useServerState()
             <Icon name="tabler:arrow-right" />
           </UButton>
         </form>
-        <p>{{ serverState }}</p>
-        <p>{{ serverStateData }}</p>
+        <div class="absolute inset-0 h-full bg-muted/20 p-0 duration-100" :style="{ width: `${progress}%` }"></div>
         <!-- <div class="flex gap-2 font-mono">
           <UButton variant="ghost">
             artist
