@@ -7,87 +7,67 @@ interface Params<T> {
   manualClientId?: string
 }
 
-let retryCount = 0
-
 /**
  * hit the soundcloud api
  */
 export async function $sc<T>({ endpoint, options, schema }: Params<T>) {
-  try {
-    return await action()
-  }
-  catch (err) {
-    if (err instanceof Error && err.message === 'RETRY') {
-      retryCount++
+  const { getClientId } = useClientId()
 
-      if (retryCount >= 1) {
-        retryCount = 0
+  let clientId = await getClientId()
 
-        throw createError({
-          message: 'An unexpected error occured while accessing SoundCloud\'s API. Please try again',
-          statusCode: 500,
-          statusMessage: 'ClientIdError',
-          unhandled: false,
-        })
-      }
-
-      await getFreshClientId()
-      return await action()
-    }
-
-    throw err
+  if (!clientId) {
+    clientId = await getFreshClientId()
   }
 
-  async function action() {
-    const { getClientId } = useClientId()
+  const url = endpoint.startsWith('http') ? endpoint : `${SOUNDCLOUD_API_URL}${endpoint}`
 
-    const clientId = await getClientId()
+  let res = await runFetch()
 
-    if (!clientId) {
-      throw new Error('RETRY')
-    }
+  // retry once if the client id is invalid (401)
+  if (res === 'RETRY') {
+    clientId = await getFreshClientId()
+    res = await runFetch()
+  }
 
-    const url = endpoint.startsWith('http') ? endpoint : `${SOUNDCLOUD_API_URL}${endpoint}`
+  const parsed = schema.safeParse(res)
 
-    const res = await $fetch(url, {
+  if (!parsed.success) {
+    throw createError({
+      data: parsed.error,
+      statusCode: 500,
+      statusMessage: 'Failed to parse SoundCloud response',
+    })
+  }
+
+  async function runFetch(manualClientId?: string) {
+    const res = await $fetch.raw(url, {
+      ...options,
       headers: {
         ...options?.headers,
         'Content-Type': 'application/json',
       },
-      onResponseError: (res) => {
-        switch (res.response.status) {
-          case 401: throw new Error('RETRY')
-          case 404: throw createError({
-            data: res.response._data,
-            statusCode: 404,
-            statusMessage: 'Could not find resource. Did you provide a valid URL?',
-          })
-          default: throw createError({
-            data: res.response._data,
-            message: 'An unexpected error occured while accessing SoundCloud\'s API. Please try again',
-            statusCode: res.response.status,
-            statusMessage: res.response.statusText,
-          })
-        }
-      },
+
+      ignoreResponseError: true,
       params: {
         ...options?.params,
-        client_id: clientId,
+        client_id: manualClientId ?? clientId,
       },
-      ...options,
       retry: false,
     })
 
-    const parsed = schema.safeParse(res)
+    if (res.status === 401) {
+      return 'RETRY'
+    }
 
-    if (!parsed.success) {
+    if (res.status === 404) {
       throw createError({
-        data: parsed.error,
-        statusCode: 500,
-        statusMessage: 'Failed to parse SoundCloud response',
+        statusCode: 404,
+        statusMessage: 'Could not find resource. Did you provide a valid SoundCloud URL?',
       })
     }
 
-    return parsed.data
+    return res._data
   }
+
+  return parsed.data
 }
