@@ -63,15 +63,6 @@ export default defineNuxtConfig({
         url: process.env.REDIS_URL,
       },
     },
-    typescript: {
-      tsConfig: {
-        compilerOptions: {
-          plugins: [{
-            name: '@effect/language-service',
-          }],
-        },
-      },
-    },
   },
 
   nuxtQuery: {
