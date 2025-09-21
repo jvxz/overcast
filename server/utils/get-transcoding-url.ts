@@ -1,4 +1,4 @@
-export function getAudioUrl(trackData: TrackData) {
+export function getTranscodingUrl(trackData: TrackData) {
   const url
     = trackData.media.transcodings.find((transcoding) => {
       if (transcoding.preset === 'mp3_1_0')

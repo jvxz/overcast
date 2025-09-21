@@ -17,7 +17,7 @@ export async function getTrackAudioUrl({
 
   const trackData = await getTrackMeta(url)
 
-  const audioUrl = getAudioUrl(trackData)
+  const audioUrl = getTranscodingUrl(trackData)
 
   const { url: playlistUrl } = await $sc({
     endpoint: audioUrl,
