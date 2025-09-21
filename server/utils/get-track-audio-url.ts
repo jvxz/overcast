@@ -1,24 +1,21 @@
+import type { H3Event } from 'h3'
 import { Readable } from 'node:stream'
 import p from 'p-limit'
 
 const limit = p(10)
 
-const QuerySchema = z.object({
-  url: SoundCloudUrlSchema,
-})
-
-export default defineEventHandler(async (event) => {
-  const { url } = await validateQueryZod(event, QuerySchema)
-
+export async function getTrackAudioUrl({
+  event,
+  url,
+}: {
+  url: string
+  event: H3Event
+}) {
   const { setProgress, setState } = useState()
 
   await setState('downloading')
 
-  const trackData = await $fetch('/api/track/meta', {
-    query: {
-      url,
-    },
-  })
+  const trackData = await getTrackMeta(url)
 
   const audioUrl = getAudioUrl(trackData)
 
@@ -108,7 +105,7 @@ export default defineEventHandler(async (event) => {
   await setState('idle')
 
   return presignedUrl
-})
+}
 
 function transformAudio(trackMeta: TrackData) {
   const chunks: Uint8Array[] = []

@@ -18,10 +18,8 @@ export default defineEventHandler(async (event) => {
     return cachedTrackUrl
   }
 
-  return $fetch('/api/track/audio', {
-    query: {
-      url: trackUrl,
-    },
-    retry: false,
+  return getTrackAudioUrl({
+    event,
+    url: trackUrl,
   })
 })
