@@ -7,6 +7,7 @@ const { downloadTrack, isDownloadingTrack } = useTrack()
 
 function handleSubmit() {
   if (trackUrl.value) {
+    serverError.value = null
     downloadTrack(trackUrl.value)
   }
 }
