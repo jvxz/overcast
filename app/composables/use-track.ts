@@ -2,6 +2,7 @@ export const useTrack = createSharedComposable(() => {
   const { isPending: isDownloadingTrack, mutate: downloadTrack } = useMutation({
     mutationFn: async (trackUrl: string) => $fetch('/api/track', {
       method: 'GET',
+      onResponse: handleResponseError,
       query: {
         url: trackUrl,
       },
