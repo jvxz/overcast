@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
     endPoint: process.env.MINIO_PUBLIC_HOST!,
     port: Number(process.env.MINIO_PUBLIC_PORT),
     secretKey: process.env.MINIO_SECRET_KEY,
+    useSSL: process.env.NODE_ENV === 'production',
   })
 
   event.context.minio = minio

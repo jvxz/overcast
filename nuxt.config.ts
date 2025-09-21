@@ -64,7 +64,7 @@ export default defineNuxtConfig({
         url: process.env.REDIS_URL,
       },
       'track-cache': {
-        driver: 'redis',
+        driver: process.env.NODE_ENV === 'production' ? 'redis' : 'memory',
         url: process.env.REDIS_URL,
       },
     },
