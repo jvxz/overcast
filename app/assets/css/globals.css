@@ -2,7 +2,7 @@
 @import 'tw-animate-css';
 
 @theme inline {
-  --font-sans: 'Inter', sans-serif;
+  --font-sans: 'Pretendard', sans-serif;
   --font-mono: 'IBM Plex Mono', monospace;
   --text-base: 1rem;
   --animate-accordion-down: accordion-down 0.15s;
@@ -150,7 +150,7 @@
   }
   body {
     @apply bg-background text-foreground font-sans antialiased text-pretty min-h-screen;
-    letter-spacing: 0.015em;
+    letter-spacing: 0.023em;
   }
 
   body[style*='padding-right'] {
