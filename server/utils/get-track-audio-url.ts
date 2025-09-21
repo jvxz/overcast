@@ -98,7 +98,7 @@ export async function getTrackAudioUrl({
   if (useAppConfig().trackCaching) {
     const { addTrackToCache } = useTrackCacheStorage()
 
-    // add track to cache in the background
+    // add track to cache in the background (do not await)
     addTrackToCache(url, presignedUrl)
   }
 
