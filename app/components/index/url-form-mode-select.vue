@@ -5,13 +5,13 @@ const formMode = useFormMode()
 </script>
 
 <template>
-  <div class="flex gap-1 font-mono">
+  <div class="flex w-full gap-1 font-mono">
     <UButton
       v-for="mode in SUBMIT_MODES"
       :key="mode"
       variant="ghost"
       :data-active="formMode === mode"
-      class="relative bg-transparent disabled:opacity-100 hover:bg-muted/50 active:bg-muted/60 data-[active=true]:text-foreground"
+      class="relative bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:text-foreground"
       @click="formMode = mode"
     >
       <p class="z-10">
