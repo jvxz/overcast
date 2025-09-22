@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+const { isSupported } = useClipboardItems()
 const { serverError } = useServerError()
 const { downloadTrack, isDownloadingTrack } = useTrack()
 
@@ -12,9 +13,18 @@ onPaste((text) => {
   handleSubmit()
 })
 
-function handleSubmit() {
-  if (trackUrl.value) {
-    if (!isUrl(trackUrl.value)) {
+function handlePasteButton() {
+  navigator.clipboard.readText().then((text) => {
+    trackUrl.value = text
+    handleSubmit(text)
+  })
+}
+
+function handleSubmit(url?: string) {
+  const input = url ?? trackUrl.value
+
+  if (input) {
+    if (!isUrl(input)) {
       return serverError.value = {
         fatal: false,
         message: 'Invalid URL',
@@ -25,7 +35,7 @@ function handleSubmit() {
     }
 
     serverError.value = null
-    downloadTrack(trackUrl.value)
+    downloadTrack(input)
   }
 }
 </script>
@@ -34,7 +44,7 @@ function handleSubmit() {
   <UCard class="relative w-full shrink-0 flex-col gap-2 overflow-hidden p-2">
     <form
       class="flex w-full items-center gap-3"
-      @submit.prevent="handleSubmit"
+      @submit.prevent="handleSubmit()"
     >
       <UInput
         v-model="trackUrl"
@@ -52,6 +62,17 @@ function handleSubmit() {
       </UButton>
     </form>
     <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${progress}%` }"></div>
-    <IndexUrlFormModeSelect />
+    <div class="flex w-full items-center">
+      <IndexUrlFormModeSelect />
+      <UButton
+        v-if="isSupported"
+        aria-label="Paste"
+        variant="ghost"
+        size="icon"
+        @click="handlePasteButton"
+      >
+        <Icon name="tabler:clipboard" />
+      </UButton>
+    </div>
   </UCard>
 </template>
