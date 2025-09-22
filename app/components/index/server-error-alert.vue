@@ -3,7 +3,7 @@ const { serverError } = useServerError()
 </script>
 
 <template>
-  <Transition>
+  <Transition name="err">
     <UAlertRoot v-if="serverError" class="flex flex-col p-4">
       <div class="flex w-full items-center justify-between">
         <UAlertTitle>

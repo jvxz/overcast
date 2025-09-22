@@ -160,11 +160,21 @@
 
   .v-enter-active,
   .v-leave-active {
-    @apply animate-in fade-in-0 duration-150 zoom-in-95;
+    @apply animate-in fade-in-0 duration-150;
   }
 
   .v-enter-from,
   .v-leave-to {
+    @apply animate-out fade-out-0 duration-150;
+  }
+
+  .err-enter-active,
+  .err-leave-active {
+    @apply animate-in fade-in-0 duration-150 zoom-in-95;
+  }
+
+  .err-enter-from,
+  .err-leave-to {
     @apply animate-out fade-out-0 duration-150 zoom-out-95;
   }
 }
