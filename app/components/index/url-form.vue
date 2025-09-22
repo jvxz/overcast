@@ -8,14 +8,23 @@ const progress = computed(() => serverState.value === 'downloading' ? Math.round
 const trackUrl = ref('')
 
 onPaste((text) => {
-  if (new URL(text)) {
-    trackUrl.value = removeSearchParams(text)
+  trackUrl.value = text
     handleSubmit()
   }
 })
 
 function handleSubmit() {
   if (trackUrl.value) {
+    if (!isUrl(trackUrl.value)) {
+      return serverError.value = {
+        fatal: false,
+        message: 'Invalid URL',
+        name: 'Error',
+        statusCode: 422,
+        unhandled: false,
+      }
+    }
+
     serverError.value = null
     downloadTrack(trackUrl.value)
   }
