@@ -99,7 +99,7 @@
   --border: hsl(223.8136 0.0001% 87.5577%);
   --input: hsl(223.8136 0.0001% 92.1478%);
   --ring: hsl(0 0% 0%);
-  --radius: 0.5rem;
+  --radius: 0.4rem;
   --overlay: hsl(0 0% 0% / 0.5);
 
   --header-height: 4rem;
