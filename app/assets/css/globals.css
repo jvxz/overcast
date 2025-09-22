@@ -102,7 +102,8 @@
   --radius: 0.4rem;
   --overlay: hsl(0 0% 0% / 0.5);
 
-  --header-height: 4rem;
+  --aside-width-closed: 4rem;
+  --aside-width-open: 36rem;
 }
 
 .dark-mode {
@@ -146,7 +147,7 @@
     transition-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
   }
   html {
-    @apply scrollbar-fancy scrollbar-gutter-stable;
+    @apply scrollbar-fancy;
   }
   body {
     @apply bg-background text-foreground font-sans antialiased text-pretty min-h-screen;
