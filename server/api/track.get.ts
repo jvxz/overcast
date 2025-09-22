@@ -5,7 +5,7 @@ const QuerySchema = z.object({
 export default defineEventHandler(async (event) => {
   const { url: trackUrl } = await validateQueryZod(event, QuerySchema)
 
-  const { resetProgress, setState } = useState()
+  const { resetProgress, setState } = useState(event.context.sessionId)
 
   await resetProgress()
   await setState('downloading')

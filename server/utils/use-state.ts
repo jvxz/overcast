@@ -5,28 +5,16 @@ type State = typeof SERVER_STATE_EVENTS[number]
  *
  * updated @ server/api/state.get.ts
  */
-export function useState() {
-  const { getItem, setItem, watch: watchState } = useStorage<string>('state')
+export function useState(sessionId: string) {
+  const { getItem, setItem, watch: watchState } = useStorage<string>(`state:${sessionId}`)
 
-  async function getState() {
-    return getItem<State | null>('state')
-  }
+  const setState = (state: State) => setItem(state, '')
 
-  async function setState(state: State) {
-    return setItem(state, '')
-  }
+  const getProgress = () => getItem('downloading')
 
-  async function getProgress() {
-    return getItem('downloading')
-  }
+  const setProgress = (progress: number) => setItem('downloading', progress.toString())
 
-  async function setProgress(progress: number) {
-    return setItem('downloading', progress.toString())
-  }
-
-  async function resetProgress() {
-    return setItem('downloading', '0')
-  }
+  const resetProgress = () => setItem('downloading', '0')
 
   return {
     /**
@@ -35,12 +23,6 @@ export function useState() {
      * @returns progress number (between 0 & 1)
      */
     getProgress,
-    /**
-     * get the current state of the server (current action the server is performing)
-     *
-     * @returns "downloading" or "idle" or "uploading"
-     */
-    getState,
     /**
      * reset the current progress of the server to 0
      */

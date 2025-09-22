@@ -11,7 +11,7 @@ export async function getTrackAudioUrl({
   url: string
   event: H3Event
 }) {
-  const { setProgress, setState } = useState()
+  const { setProgress, setState } = useState(event.context.sessionId)
 
   await setState('downloading')
 

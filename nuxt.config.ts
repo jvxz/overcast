@@ -10,6 +10,9 @@ export default defineNuxtConfig({
       title: 'overcast',
     },
   },
+  auth: {
+    loadStrategy: 'client-only',
+  },
 
   compatibilityDate: '2025-07-15',
 
@@ -41,6 +44,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-security',
     '@peterbud/nuxt-query',
+    'nuxt-auth-utils',
   ],
 
   nitro: {

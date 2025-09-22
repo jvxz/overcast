@@ -1,14 +1,20 @@
+const QuerySchema = z.object({
+  id: z.string(),
+})
+
 export default defineEventHandler(async (event) => {
+  const { id } = await validateQueryZod(event, QuerySchema)
+
   const eventStream = createEventStream(event)
 
-  const { getProgress, watchState } = useState()
+  const { getProgress, watchState } = useState(id)
 
   watchState(async (_, key) => {
-    if (!key.startsWith('state:')) {
+    if (!key.includes(id)) {
       return
     }
 
-    const state = key.split(':')[1] as ServerState
+    const state = key.split(':')[2] as ServerState
 
     if (state === 'downloading') {
       const progress = await getProgress()
@@ -23,6 +29,10 @@ export default defineEventHandler(async (event) => {
       data: '',
       event: state,
     })
+  })
+
+  eventStream.onClosed(() => {
+
   })
 
   return eventStream.send()
