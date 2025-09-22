@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-screen flex-col items-center justify-center gap-4">
+  <UCard class="flex h-full flex-col items-center justify-center gap-4 bg-background">
     <div class="flex w-xl flex-col gap-4">
       <div class="flex-1" />
       <IndexUrlForm />
@@ -7,5 +7,5 @@
         <IndexServerErrorAlert />
       </div>
     </div>
-  </div>
+  </UCard>
 </template>
