@@ -3,7 +3,7 @@
 
 @theme inline {
   --font-sans: 'Pretendard', sans-serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-mono: 'Lilex', monospace;
   --text-base: 1rem;
   --animate-accordion-down: accordion-down 0.15s;
   --animate-accordion-up: accordion-up 0.15s;
