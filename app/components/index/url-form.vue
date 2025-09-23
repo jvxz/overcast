@@ -3,6 +3,8 @@ const { isSupported } = useClipboardItems()
 const { serverError } = useServerError()
 const { downloadTrack, isDownloadingTrack } = useTrack()
 const { formMode } = useFormMode()
+const { asideTab, isAsideOpen } = useAsideState()
+const { addTrackToMultiTrack } = useMultiTrack()
 
 const { serverState, serverStateData } = useServerState()
 const progress = computed(() => serverState.value === 'downloading' ? Math.round(Number(serverStateData.value) * 100) : 0)
@@ -36,7 +38,20 @@ function handleSubmit(url?: string) {
     }
 
     serverError.value = null
+
+    switch (formMode.value) {
+      case 'track':
     downloadTrack(input)
+        break
+      case 'multi':
+        asideTab.value = 'multi-track'
+        isAsideOpen.value = true
+
+        addTrackToMultiTrack(input)
+        break
+      default:
+        break
+    }
   }
 }
 </script>
@@ -59,7 +74,7 @@ function handleSubmit(url?: string) {
         variant="ghost"
         class="px-0"
       >
-        <Icon name="tabler:arrow-right" />
+        <Icon :name="formMode === 'multi' ? 'mingcute:add-line' : 'tabler:arrow-right'" />
       </UButton>
     </form>
     <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${progress}%` }"></div>
