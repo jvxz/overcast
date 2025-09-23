@@ -5,4 +5,4 @@ export type ServerState = typeof SERVER_STATE_EVENTS[number]
 export const SERVER_STATE_EVENTS = ['downloading', 'idle', 'uploading'] as const
 
 export type SubmitMode = typeof SUBMIT_MODES[number]
-export const SUBMIT_MODES = ['track', 'artist', 'playlist'] as const
+export const SUBMIT_MODES = ['track', 'artist', 'playlist', 'multi'] as const
