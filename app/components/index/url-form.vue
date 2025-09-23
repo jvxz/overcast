@@ -2,6 +2,7 @@
 const { isSupported } = useClipboardItems()
 const { serverError } = useServerError()
 const { downloadTrack, isDownloadingTrack } = useTrack()
+const { formMode } = useFormMode()
 
 const { serverState, serverStateData } = useServerState()
 const progress = computed(() => serverState.value === 'downloading' ? Math.round(Number(serverStateData.value) * 100) : 0)

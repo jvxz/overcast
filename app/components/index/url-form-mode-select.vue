@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { motion } from 'motion-v'
 
-const formMode = useFormMode()
+const { formMode } = useFormMode()
 </script>
 
 <template>
