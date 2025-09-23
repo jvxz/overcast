@@ -19,6 +19,7 @@
     "@nuxtjs/color-mode": "^3.5.2",
     "@peterbud/nuxt-query": "1.1.0",
     "@tailwindcss/vite": "^4.1.13",
+    "@tanstack/vue-query": "^5.90.2",
     "@vueuse/core": "^13.9.0",
     "@vueuse/nuxt": "^13.9.0",
     "@vueuse/router": "^13.9.0",
