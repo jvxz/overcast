@@ -25,11 +25,11 @@ const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
     :data-open="isAsideOpen"
     class="flex w-[var(--aside-width-closed)] shrink-0 gap-3 duration-150 ease-out data-[open=true]:w-[var(--aside-width-open)] motion-reduce:transition-none"
   >
-    <div class="flex w-16 shrink-0 flex-col gap-1">
+    <div class="flex w-12 shrink-0 flex-col gap-1">
       <UButton
         v-for="tab in ASIDE_TABS"
         :key="tab"
-        class="size-16"
+        class="size-12"
         variant="ghost"
         @click="handleTabClick(tab)"
       >

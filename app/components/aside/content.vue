@@ -5,7 +5,7 @@ const { asideTab, isAsideOpen } = useAsideState()
 
 <template>
   <div class="flex min-w-[500px] flex-col">
-    <div class="flex h-16 items-center justify-between">
+    <div class="flex h-12 items-center justify-between">
       <h1 class="text-2xl font-medium">
         overcast
       </h1>
