@@ -40,7 +40,7 @@ function handleSubmit(url?: string) {
 
     switch (formMode.value) {
       case 'track':
-    downloadTrack(input)
+        downloadTrack({ target: 'index', trackUrl: input })
         break
       case 'multi':
         asideTab.value = 'multi-track'
@@ -67,8 +67,8 @@ function handleSubmit(url?: string) {
         class="border-none bg-transparent px-1.5 shadow-none"
       />
       <UButton
-        :disabled="!trackUrl"
-        :is-loading="isDownloadingTrack"
+        :disabled="!trackUrl || isDownloadingTrack"
+        :is-loading="isTargetDownloading('index')"
         size="icon"
         variant="ghost"
         class="px-0"
@@ -76,7 +76,7 @@ function handleSubmit(url?: string) {
         <Icon :name="formMode === 'multi' ? 'mingcute:add-line' : 'tabler:arrow-right'" />
       </UButton>
     </form>
-    <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${progress}%` }"></div>
+    <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${trackDownloadProgress}%` }"></div>
     <div class="flex w-full items-center">
       <IndexUrlFormModeSelect />
       <div class="flex shrink-0 items-center gap-1">
