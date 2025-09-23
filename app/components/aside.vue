@@ -5,7 +5,7 @@ const { isAsideOpen } = useAsideState()
 <template>
   <aside
     :data-open="isAsideOpen"
-    class="w-[var(--aside-width-closed)] shrink-0 duration-150 ease-out data-[open=true]:w-[var(--aside-width-open)] motion-reduce:transition-none"
+    class="flex w-[var(--aside-width-closed)] shrink-0 gap-3 duration-150 ease-out data-[open=true]:w-[var(--aside-width-open)] motion-reduce:transition-none"
   >
     <UButton
       class="size-16"
@@ -14,5 +14,8 @@ const { isAsideOpen } = useAsideState()
     >
       <Logo class="!size-8" />
     </UButton>
+    <Transition>
+      <AsideContent v-if="isAsideOpen" />
+    </Transition>
   </aside>
 </template>
