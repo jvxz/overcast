@@ -65,6 +65,16 @@ function handleSubmit(url?: string) {
     <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${progress}%` }"></div>
     <div class="flex w-full items-center">
       <IndexUrlFormModeSelect />
+      <div class="flex shrink-0 items-center gap-1">
+        <UButton
+          v-if="formMode === 'multi' || formMode === 'track'"
+          size="icon"
+          variant="ghost"
+          aria-label="Paste"
+          @click="formMode === 'multi' ? formMode = 'track' : formMode = 'multi'"
+        >
+          <Icon :name="formMode === 'multi' ? 'mingcute:square-line' : 'mingcute:grid-line'" />
+        </UButton>
       <UButton
         v-if="isSupported"
         aria-label="Paste"
@@ -74,6 +84,7 @@ function handleSubmit(url?: string) {
       >
         <Icon name="tabler:clipboard" />
       </UButton>
+      </div>
     </div>
   </UCard>
 </template>
