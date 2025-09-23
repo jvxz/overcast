@@ -3,7 +3,7 @@ const props = defineProps<{
   trackUrl: string
 }>()
 
-const { downloadTrack } = useTrack()
+const { downloadTrack, isDownloadingTrack } = useTrack()
 const { removeTrackFromMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState(props.trackUrl)
 
@@ -44,7 +44,9 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
           <UButton
             size="icon"
             variant="ghost"
-            @click="downloadTrack(trackUrl)"
+            :is-loading="isTargetDownloading(props.trackUrl)"
+            :disabled="isDownloadingTrack"
+            @click="downloadTrack({ target: props.trackUrl, trackUrl: props.trackUrl })"
           >
             <Icon name="mingcute:download-line" />
           </UButton>
@@ -56,6 +58,7 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
             <Icon name="mingcute:delete-line" />
           </UButton>
         </div>
+        <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${trackDownloadProgress}%` }"></div>
       </UCard>
       <UCard v-else-if="error" class="absolute size-full flex-row gap-3 border-danger p-3">
         <UCardHeader class="aspect-square h-full">
