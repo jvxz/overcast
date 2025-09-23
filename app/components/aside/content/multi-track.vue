@@ -2,7 +2,7 @@
 const { multiTracks } = useMultiTrack()
 
 const hasTracks = computed(() => multiTracks.value.size > 0)
-const placeholder = computed(() => hasTracks.value ? `Search ${multiTracks.value.size} tracks` : 'No tracks added')
+const placeholder = computed(() => hasTracks.value ? `Search ${multiTracks.value.size} ${multiTracks.value.size === 1 ? 'track' : 'tracks'}` : 'No tracks added')
 </script>
 
 <template>
