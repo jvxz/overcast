@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
       return
     }
 
-    const state = key.split(':')[2] as ServerState
+    const state = key.split(':').pop() as ServerState
 
     if (state === 'downloading') {
       const progress = await getProgress()
