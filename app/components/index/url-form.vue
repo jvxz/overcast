@@ -6,8 +6,7 @@ const { formMode } = useFormMode()
 const { asideTab, isAsideOpen } = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
 
-const { serverState, serverStateData } = useServerState()
-const progress = computed(() => serverState.value === 'downloading' ? Math.round(Number(serverStateData.value) * 100) : 0)
+const { trackDownloadProgress } = useServerState('index')
 
 const trackUrl = ref('')
 

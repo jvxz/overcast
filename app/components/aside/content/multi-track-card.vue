@@ -5,6 +5,7 @@ const props = defineProps<{
 
 const { downloadTrack } = useTrack()
 const { removeTrackFromMultiTrack } = useMultiTrack()
+const { trackDownloadProgress } = useServerState(props.trackUrl)
 
 const { data, error, isPending } = useQuery({
   queryFn: async () => $fetch('/api/track/meta', {
