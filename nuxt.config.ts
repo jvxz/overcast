@@ -78,6 +78,17 @@ export default defineNuxtConfig({
     autoImports: true,
   },
 
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'img-src': [
+          'data:',
+          'https://i1.sndcdn.com',
+        ],
+      },
+    },
+  },
+
   vite: {
     plugins: [
       tailwindcss(),
