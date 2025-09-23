@@ -6,13 +6,14 @@ const props = defineProps<{
 const { downloadTrack } = useTrack()
 const { removeTrackFromMultiTrack } = useMultiTrack()
 
-const { data, isPending } = useQuery({
+const { data, error, isPending } = useQuery({
   queryFn: async () => $fetch('/api/track/meta', {
     query: {
       url: props.trackUrl,
     },
   }),
   queryKey: [props.trackUrl],
+  retry: false,
 })
 
 const artist = computed(() => data.value?.publisher_metadata?.artist ?? data.value?.user.username)
@@ -21,16 +22,16 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
 </script>
 
 <template>
-  <div class="h-24 relative">
-    <Transition appear>
-      <UCard v-if="!isPending && data" class="size-full flex-row gap-3 p-3 absolute">
+  <div class="relative h-24">
+    <Transition>
+      <UCard v-if="!isPending && data" class="absolute size-full flex-row gap-3 p-3">
         <UCardHeader class="aspect-square h-full">
           <NuxtImg :src="coverUrl" class="size-full rounded" />
         </UCardHeader>
         <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col justify-between self-center *:[text-box:_trim-both_cap_alphabetic]">
-          <p class="text-lg font-medium">
+          <NuxtLink :href="trackUrl " class="text-lg font-medium hover:underline">
             {{ data.title }}
-          </p>
+          </NuxtLink>
           <p class="text-sm font-medium text-muted-foreground">
             {{ artist }}
           </p>
@@ -55,7 +56,38 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
           </UButton>
         </div>
       </UCard>
-      <UCard v-else class="size-full flex-row gap-3 p-3 absolute">
+      <UCard v-else-if="error" class="absolute size-full flex-row gap-3 border-danger p-3">
+        <UCardHeader class="aspect-square h-full">
+          <div class="grid size-full place-items-center rounded bg-muted">
+            <Icon name="mingcute:ghost-line" class="!size-6" />
+          </div>
+        </UCardHeader>
+        <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col self-center">
+          <NuxtLink :href="trackUrl" class="-translate-y-1.5 truncate text-lg font-medium hover:underline">
+            {{ trackUrl }}
+          </NuxtLink>
+          <p class="-translate-y-1.5 text-sm font-medium text-muted-foreground">
+            Invalid track URL
+          </p>
+        </div>
+        <div class="flex h-full flex-col justify-between">
+          <UButton
+            disabled
+            size="icon"
+            variant="ghost"
+          >
+            <Icon name="mingcute:download-line" />
+          </UButton>
+          <UButton
+            size="icon"
+            variant="ghost"
+            @click="removeTrackFromMultiTrack(trackUrl)"
+          >
+            <Icon name="mingcute:delete-line" />
+          </UButton>
+        </div>
+      </UCard>
+      <UCard v-else class="absolute size-full flex-row gap-3 p-3">
         <UCardHeader class="aspect-square h-full">
           <div class="size-full rounded bg-muted" />
         </UCardHeader>
