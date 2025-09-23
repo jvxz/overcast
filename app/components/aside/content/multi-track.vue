@@ -31,5 +31,11 @@ const placeholder = computed(() => hasTracks.value ? `Search ${multiTracks.value
         <Icon name="mingcute:download-line" />
       </UButton>
     </div>
+    <AsideContentMultiTrackCard
+      v-for="track in multiTracks"
+      :key="track"
+      :track-url="track"
+    >
+    </AsideContentMultiTrackCard>
   </div>
 </template>
