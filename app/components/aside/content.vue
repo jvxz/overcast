@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const { $version } = useNuxtApp()
-const { isAsideOpen } = useAsideState()
+const { asideTab, isAsideOpen } = useAsideState()
 </script>
 
 <template>
@@ -22,5 +22,7 @@ const { isAsideOpen } = useAsideState()
         </UButton>
       </div>
     </div>
+    <AsideContentArtist v-if="asideTab === 'artist'" />
+    <AsideContentMultiTrack v-if="asideTab === 'multi-track'" />
   </div>
 </template>
