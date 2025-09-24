@@ -12,6 +12,7 @@ const { data, error, isPending } = useQuery({
     query: {
       url: props.trackUrl,
     },
+    onResponse: handleResponseError,
   }),
   queryKey: [props.trackUrl],
   retry: false,
@@ -30,7 +31,7 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
           <NuxtImg :src="coverUrl" class="size-full rounded" />
         </UCardHeader>
         <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col justify-between self-center *:[text-box:_trim-both_cap_alphabetic]">
-          <NuxtLink :href="trackUrl " class="text-lg font-medium hover:underline">
+          <NuxtLink :href="trackUrl" class="text-lg font-medium hover:underline">
             {{ data.title }}
           </NuxtLink>
           <p class="text-sm font-medium text-muted-foreground">
@@ -44,7 +45,7 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
           <UButton
             size="icon"
             variant="ghost"
-            :is-loading="isTargetDownloading(props.trackUrl)"
+            :is-loading="isTargetBusy(props.trackUrl)"
             :disabled="isDownloadingTrack"
             @click="downloadTrack({ target: props.trackUrl, trackUrl: props.trackUrl })"
           >
@@ -76,7 +77,7 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
         </div>
         <div class="flex h-full flex-col justify-between">
           <UButton
-            disabled
+            :disabled="true"
             size="icon"
             variant="ghost"
           >
