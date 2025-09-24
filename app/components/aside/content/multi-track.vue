@@ -2,6 +2,7 @@
 const { serverState, zippingProgress } = useServerState('multi-track')
 const { containsInvalidTrack, multiTracks } = useMultiTrack()
 const { downloadMultiTracks, isBusy, isDownloadingMultiTracks } = useTrack()
+const searchQuery = useMultiTrackSearch()
 
 const hasTracks = computed(() => multiTracks.value.size > 0)
 const placeholder = computed(() => {
@@ -19,6 +20,7 @@ const placeholder = computed(() => {
       <div class="relative w-full">
         <div class="relative">
           <UInput
+            v-model="searchQuery"
             :disabled="!hasTracks || isDownloadingMultiTracks"
             :placeholder
             class="pl-8"

@@ -1,11 +1,23 @@
 export const useMultiTrackSet = () => useState('multi-track', () => new Set<string>())
+export const useMultiTrackSearch = createGlobalState(() => ref(''))
 
 export const useMultiTrack = createGlobalState(() => {
   const qc = useQueryClient()
   const multiTracks = useMultiTrackSet()
 
-  function addTrackToMultiTrack(trackUrl: string) {
+  async function addTrackToMultiTrack(trackUrl: string) {
     multiTracks.value.add(trackUrl)
+
+    await qc.ensureQueryData({
+      queryFn: async () => $fetch('/api/track/meta', {
+        onResponse: handleResponseError,
+        query: {
+          url: trackUrl,
+        },
+      }),
+      queryKey: [trackUrl],
+      revalidateIfStale: false,
+    })
   }
 
   function removeTrackFromMultiTrack(trackUrl: string) {
