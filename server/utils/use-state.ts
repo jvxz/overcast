@@ -10,9 +10,9 @@ export function useState(sessionId: string) {
 
   const setState = (state: State) => setItem(state, '')
 
-  const getProgress = () => getItem('downloading')
+  const getProgress = (key = 'downloading' as ServerState) => getItem(key)
 
-  const setProgress = (progress: number) => setItem('downloading', progress.toString())
+  const setProgress = (progress: number, key = 'downloading' as ServerState) => setItem(key, progress.toString())
 
   const resetProgress = () => setItem('downloading', '0')
 
@@ -21,6 +21,7 @@ export function useState(sessionId: string) {
      * get the current progress of the server
      *
      * @returns progress number (between 0 & 1)
+     * @param key (defaults to 'downloading')
      */
     getProgress,
     /**
@@ -31,12 +32,13 @@ export function useState(sessionId: string) {
      * set the current progress of the server
      *
      * @param progress
+     * @param key (defaults to 'downloading')
      */
     setProgress,
     /**
      * set the current state of the server (current action the server is performing)
      *
-     * @param state "downloading" or "idle" or "uploading"
+     * @param state "downloading" or "idle" or "uploading" or "zipping"
      */
     setState,
     watchState,
