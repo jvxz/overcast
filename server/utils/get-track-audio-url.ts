@@ -5,15 +5,20 @@ import p from 'p-limit'
 const limit = p(10)
 
 export async function getTrackAudioUrl({
+  doStateUpdates = true,
   event,
   url,
+  waitForCache = false,
 }: {
+  doStateUpdates?: boolean
   url: string
   event: H3Event
+  waitForCache?: boolean
 }) {
   const { setProgress, setState } = useState(event.context.sessionId)
 
-  await setState('downloading')
+  if (doStateUpdates)
+    await setState('downloading')
 
   const trackData = await getTrackMeta(url)
 
@@ -65,7 +70,8 @@ export async function getTrackAudioUrl({
           const { done, value } = await reader.read()
           if (done) {
             localProgress++
-            setProgress(localProgress / segments.length)
+            if (doStateUpdates)
+              setProgress(localProgress / segments.length)
             break
           }
 
@@ -98,11 +104,24 @@ export async function getTrackAudioUrl({
   if (useAppConfig().trackCaching) {
     const { addTrackToCache } = useTrackCacheStorage()
 
-    // add track to cache in the background (do not await)
-    addTrackToCache(url, presignedUrl)
+    if (waitForCache) {
+      await addTrackToCache({
+        dir: `cache/${filename}`,
+        presignedUrl,
+        trackUrl: url,
+      })
+    }
+    else {
+      addTrackToCache({
+        dir: `cache/${filename}`,
+        presignedUrl,
+        trackUrl: url,
+      })
+    }
   }
 
-  await setState('idle')
+  if (doStateUpdates)
+    await setState('idle')
 
   return presignedUrl
 }

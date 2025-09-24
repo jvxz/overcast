@@ -1,1 +1,3 @@
-export const useFormMode = () => useRouteParams<SubmitMode>('mode', 'track')
+export function useFormMode() {
+  return useState('form-mode', () => 'track' as SubmitMode)
+}

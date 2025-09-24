@@ -14,14 +14,14 @@ export default defineEventHandler(async (event) => {
       return
     }
 
-    const state = key.split(':')[2] as ServerState
+    const state = key.split(':').pop() as ServerState
 
-    if (state === 'downloading') {
-      const progress = await getProgress()
+    if (state === 'downloading' || state === 'zipping') {
+      const progress = await getProgress(state)
 
       return eventStream.push({
         data: progress?.toString() ?? '0',
-        event: 'downloading',
+        event: state,
       })
     }
 

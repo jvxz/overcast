@@ -68,7 +68,8 @@ export default defineNuxtConfig({
         url: process.env.REDIS_URL,
       },
       'track-cache': {
-        driver: process.env.NODE_ENV === 'production' ? 'redis' : 'memory',
+        base: 'track-cache',
+        driver: 'redis',
         url: process.env.REDIS_URL,
       },
     },
@@ -76,6 +77,17 @@ export default defineNuxtConfig({
 
   nuxtQuery: {
     autoImports: true,
+  },
+
+  security: {
+    headers: {
+      contentSecurityPolicy: {
+        'img-src': [
+          'data:',
+          'https://i1.sndcdn.com',
+        ],
+      },
+    },
   },
 
   vite: {
