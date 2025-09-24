@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-const { serverError } = useServerError()
+const serverError = useServerError()
 </script>
 
 <template>

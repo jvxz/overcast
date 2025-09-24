@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const { isSupported } = useClipboardItems()
-const { serverError } = useServerError()
+const serverError = useServerError()
 const { downloadTrack, isDownloadingTrack } = useTrack()
 const formMode = useFormMode()
 const asideState = useAsideState()
