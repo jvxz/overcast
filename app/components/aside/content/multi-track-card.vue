@@ -9,13 +9,14 @@ const { trackDownloadProgress } = useServerState(props.trackUrl)
 
 const { data, error, isPending } = useQuery({
   queryFn: async () => $fetch('/api/track/meta', {
+    onResponse: handleResponseError,
     query: {
       url: props.trackUrl,
     },
-    onResponse: handleResponseError,
   }),
   queryKey: [props.trackUrl],
   retry: false,
+  staleTime: 600000,
 })
 
 const artist = computed(() => data.value?.publisher_metadata?.artist ?? data.value?.user.username)
