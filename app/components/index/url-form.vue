@@ -2,7 +2,7 @@
 const { isSupported } = useClipboardItems()
 const { serverError } = useServerError()
 const { downloadTrack, isDownloadingTrack } = useTrack()
-const { formMode } = useFormMode()
+const formMode = useFormMode()
 const { asideTab, isAsideOpen } = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState('index')

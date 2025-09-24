@@ -1,3 +1,3 @@
-export const useFormMode = createGlobalState(() => ({
-  formMode: ref<SubmitMode>('track'),
-}))
+export function useFormMode() {
+  return useState('form-mode', () => 'track' as SubmitMode)
+}
