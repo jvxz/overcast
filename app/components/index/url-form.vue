@@ -75,7 +75,7 @@ function handleSubmit(url?: string) {
         size="icon"
         class="px-0"
       >
-        <Icon :name="formMode === 'multi' ? 'mingcute:add-line' : 'tabler:arrow-right'" />
+        <Icon :name="formMode === 'multi' ? 'mingcute:add-line' : 'mingcute:arrow-right-line'" />
       </UButton>
     </form>
     <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${trackDownloadProgress}%` }"></div>
@@ -98,7 +98,7 @@ function handleSubmit(url?: string) {
           size="icon"
           @click="handlePasteButton"
         >
-          <Icon name="tabler:clipboard" />
+          <Icon name="mingcute:clipboard-line" />
         </UButton>
       </div>
     </div>

@@ -44,7 +44,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
             'absolute top-3 right-3 inline-flex size-6 items-center justify-center opacity-70',
           )"
         >
-          <Icon name="tabler:x" class="size-4" />
+          <Icon name="mingcute:close-line" class="size-4" />
           <span class="sr-only">Close</span>
         </DialogClose>
       </DialogContent>

@@ -23,7 +23,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
         cn(
           staticStyles.base,
           staticStyles.variant.default,
-          'fixed top-[50%] left-[50%] z-50 grid  w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-bottom-2 sm:max-w-xl data-[state=closed]:animate-out data-[state=closed]:fade-out-0',
+          'fixed top-[50%] left-[50%] z-50 grid w-full max-w-[calc(100%-2rem)] translate-x-[-50%] translate-y-[-50%] gap-4 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:slide-in-from-bottom-2 sm:max-w-xl',
           props.class,
         )"
     >
@@ -37,7 +37,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
           'absolute top-3 right-3 inline-flex size-6 items-center justify-center opacity-70',
         )"
       >
-        <Icon name="tabler:x" class="size-4" />
+        <Icon name="mingcute:close-line" class="size-4" />
         <span class="sr-only">Close</span>
       </DialogClose>
     </DialogContent>

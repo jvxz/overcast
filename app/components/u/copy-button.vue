@@ -45,7 +45,7 @@ function copyValue(value: string) {
         class="absolute h-5"
       >
         <Icon
-          name="tabler:check"
+          name="mingcute:check-line"
           class="!size-4"
         />
       </motion.div>
@@ -57,7 +57,7 @@ function copyValue(value: string) {
         :transition="transition"
         class="absolute h-5"
       >
-        <Icon name="tabler:copy" class="!size-4" />
+        <Icon name="mingcute:copy-line" class="!size-4" />
       </motion.div>
     </AnimatePresence>
   </UButton>

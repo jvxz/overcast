@@ -19,6 +19,6 @@ const forwardedProps = useForwardProps(delegatedProps)
     )"
   >
     <slot />
-    <Icon name="tabler:chevron-right" class="ml-auto !size-4" />
+    <Icon name="mingcute:right-line" class="ml-auto !size-4" />
   </ContextMenuSubTrigger>
 </template>

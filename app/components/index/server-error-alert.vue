@@ -15,7 +15,7 @@ const serverError = useServerError()
           size="icon"
           @click="serverError = null"
         >
-          <Icon name="tabler:x" />
+          <Icon name="mingcute:close-line" />
         </UButton>
       </div>
       <UAlertDescription>

@@ -22,7 +22,7 @@ const forwarded = useForwardPropsEmits(delegatedProps, emits)
   >
     <span class="pointer-events-none absolute left-2 flex size-3.5 items-center justify-center">
       <ContextMenuItemIndicator>
-        <Icon name="tabler:check" class="!size-4" />
+        <Icon name="mingcute:check-line" class="!size-4" />
       </ContextMenuItemIndicator>
     </span>
     <slot />
