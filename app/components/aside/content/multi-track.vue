@@ -38,6 +38,7 @@ const placeholder = computed(() => {
         size="icon"
         variant="soft"
         :disabled="!hasTracks || isBusy"
+        @click="multiTracks.clear()"
       >
         <Icon name="mingcute:delete-line" />
       </UButton>
