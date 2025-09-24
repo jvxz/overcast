@@ -32,7 +32,11 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
           <NuxtImg :src="coverUrl" class="size-full rounded" />
         </UCardHeader>
         <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col justify-between self-center *:[text-box:_trim-both_cap_alphabetic]">
-          <NuxtLink :href="trackUrl" class="text-lg font-medium hover:underline">
+          <NuxtLink
+            :title="data.title"
+            :href="trackUrl"
+            class="max-w-fit truncate text-lg font-medium hover:underline"
+          >
             {{ data.title }}
           </NuxtLink>
           <p class="text-sm font-medium text-muted-foreground">
@@ -65,7 +69,7 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
       <UCard v-else-if="error" class="absolute size-full flex-row gap-3 border-danger p-3">
         <UCardHeader class="aspect-square h-full">
           <div class="grid size-full place-items-center rounded bg-muted">
-            <Icon name="mingcute:ghost-line" class="!size-6" />
+            <Icon name="mingcute:ghost-line" class="!size-6 text-muted-foreground" />
           </div>
         </UCardHeader>
         <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col self-center">
