@@ -10,6 +10,7 @@ export default defineNuxtConfig({
       title: 'overcast',
     },
   },
+
   auth: {
     loadStrategy: 'client-only',
   },
@@ -38,6 +39,10 @@ export default defineNuxtConfig({
     clientBundle: {
       scan: true,
     },
+    customCollections: [{
+      dir: './public/assets/icons/',
+      prefix: 'tabler',
+    }],
     provider: 'none',
   },
 
