@@ -29,8 +29,16 @@ export default defineNuxtConfig({
 
   fonts: {
     defaults: {
+      preload: true,
       weights: [400, 500, 700],
     },
+  },
+
+  icon: {
+    clientBundle: {
+      scan: true,
+    },
+    provider: 'none',
   },
 
   modules: [
