@@ -13,6 +13,7 @@ export function useServerState(target: MaybeRefOrGetter<'index' | string & {}>) 
   const isTarget = computed(() => toValue(target) === serverStateTarget.value)
   const serverStateData = computed(() => isTarget.value ? _serverStateData.value : null)
   const trackDownloadProgress = computed(() => serverState.value === 'downloading' ? (Number(serverStateData.value) * 100).toFixed(5) : 0)
+  const zippingProgress = computed(() => serverState.value === 'zipping' ? (Number(serverStateData.value) * 100).toFixed(5) : 0)
 
   return {
     isTarget,
@@ -25,5 +26,6 @@ export function useServerState(target: MaybeRefOrGetter<'index' | string & {}>) 
      */
     serverStateTarget,
     trackDownloadProgress,
+    zippingProgress,
   }
 }
