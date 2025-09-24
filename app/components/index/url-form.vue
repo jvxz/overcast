@@ -3,7 +3,7 @@ const { isSupported } = useClipboardItems()
 const { serverError } = useServerError()
 const { downloadTrack, isDownloadingTrack } = useTrack()
 const formMode = useFormMode()
-const { asideTab, isAsideOpen } = useAsideState()
+const asideState = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState('index')
 
@@ -46,8 +46,8 @@ function handleSubmit(url?: string) {
         downloadTrack({ target: 'index', trackUrl: input })
         break
       case 'multi':
-        asideTab.value = 'multi-track'
-        isAsideOpen.value = true
+        asideState.value.asideTab = 'multi-track'
+        asideState.value.isAsideOpen = true
 
         addTrackToMultiTrack(input)
         break

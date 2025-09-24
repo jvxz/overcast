@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const { $version } = useNuxtApp()
-const { asideTab, isAsideOpen } = useAsideState()
+const asideState = useAsideState()
 </script>
 
 <template>
@@ -16,13 +16,13 @@ const { asideTab, isAsideOpen } = useAsideState()
         <UButton
           variant="ghost"
           size="icon"
-          @click="isAsideOpen = false"
+          @click="asideState.isAsideOpen = false"
         >
           <Icon name="mingcute:align-arrow-left-line" class="!size-4" />
         </UButton>
       </div>
     </div>
-    <AsideContentArtist v-if="asideTab === 'artist'" />
-    <AsideContentMultiTrack v-if="asideTab === 'multi-track'" />
+    <AsideContentArtist v-if="asideState.asideTab === 'artist'" />
+    <AsideContentMultiTrack v-if="asideState.asideTab === 'multi-track'" />
   </div>
 </template>

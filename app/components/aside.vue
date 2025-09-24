@@ -1,13 +1,13 @@
 <script lang="ts" setup>
-const { asideTab, isAsideOpen } = useAsideState()
+const asideState = useAsideState()
 
 function handleTabClick(tab: typeof ASIDE_TABS[number]) {
-  if (tab === asideTab.value && isAsideOpen.value) {
-    isAsideOpen.value = false
+  if (tab === asideState.value.asideTab && asideState.value.isAsideOpen) {
+    asideState.value.isAsideOpen = false
     return
   }
-  asideTab.value = tab
-  isAsideOpen.value = true
+  asideState.value.asideTab = tab
+  asideState.value.isAsideOpen = true
 }
 
 const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
@@ -22,7 +22,7 @@ const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
 
 <template>
   <aside
-    :data-open="isAsideOpen"
+    :data-open="asideState.isAsideOpen"
     class="flex w-[var(--aside-width-closed)] shrink-0 gap-3 duration-150 ease-out data-[open=true]:w-[var(--aside-width-open)] motion-reduce:transition-none"
   >
     <div class="flex w-12 shrink-0 flex-col gap-1">
@@ -38,7 +38,7 @@ const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
     </div>
 
     <Transition>
-      <AsideContent v-if="isAsideOpen" />
+      <AsideContent v-if="asideState.isAsideOpen" />
     </Transition>
   </aside>
 </template>
