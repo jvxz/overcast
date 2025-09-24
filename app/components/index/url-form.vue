@@ -32,7 +32,7 @@ function handleSubmit(url?: string) {
     if (!isUrl(input)) {
       return serverError.value = {
         fatal: false,
-        message: 'Invalid URL',
+        message: 'Invalid input. Must be a valid URL',
         name: 'Error',
         statusCode: 422,
         unhandled: false,
@@ -73,7 +73,6 @@ function handleSubmit(url?: string) {
         :disabled="!trackUrl || isDownloadingTrack"
         :is-loading="isTargetBusy('index')"
         size="icon"
-        variant="ghost"
         class="px-0"
       >
         <Icon :name="formMode === 'multi' ? 'mingcute:add-line' : 'tabler:arrow-right'" />
@@ -92,15 +91,15 @@ function handleSubmit(url?: string) {
         >
           <Icon :name="formMode === 'multi' ? 'mingcute:square-line' : 'mingcute:grid-line'" />
         </UButton>
-      <UButton
-        v-if="isSupported"
-        aria-label="Paste"
-        variant="ghost"
-        size="icon"
-        @click="handlePasteButton"
-      >
-        <Icon name="tabler:clipboard" />
-      </UButton>
+        <UButton
+          v-if="isSupported"
+          aria-label="Paste"
+          variant="ghost"
+          size="icon"
+          @click="handlePasteButton"
+        >
+          <Icon name="tabler:clipboard" />
+        </UButton>
       </div>
     </div>
   </UCard>

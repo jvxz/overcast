@@ -14,8 +14,8 @@ const placeholder = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4">
-    <div class="flex items-center gap-2">
+  <div class="flex h-full w-full flex-col items-center gap-4">
+    <div class="flex w-full items-center gap-2">
       <div class="relative w-full">
         <div class="relative">
           <UInput
@@ -49,11 +49,19 @@ const placeholder = computed(() => {
         <Icon name="mingcute:download-line" />
       </UButton>
     </div>
-    <AsideContentMultiTrackCard
-      v-for="track in multiTracks"
-      :key="track"
-      :track-url="track"
-    >
-    </AsideContentMultiTrackCard>
+    <div class="relative h-full w-full">
+      <Transition>
+        <AsideContentMultiTrackList v-if="multiTracks.size" />
+        <div v-else class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+          <Icon name="mingcute:ghost-line" class="!size-16" />
+          <h1 class="text-lg font-medium">
+            No tracks added
+          </h1>
+          <p class="w-sm text-center" style="text-wrap: balance;">
+            Add tracks to the list by switching to multi-track mode, or adding them via the artist tab
+          </p>
+        </div>
+      </Transition>
+    </div>
   </div>
 </template>
