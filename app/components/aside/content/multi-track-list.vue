@@ -20,6 +20,9 @@ const multiTrackArray = computed(() => {
     }
 
     return meta.title.trim().toLowerCase().includes(term)
+      || meta.publisher_metadata?.artist?.trim().toLowerCase().includes(term)
+      || meta.user.username.trim().toLowerCase().includes(term)
+      || url.trim().toLowerCase().includes(term)
   })
 })
 
