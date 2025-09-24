@@ -5,7 +5,6 @@ const { downloadTrack, isDownloadingTrack } = useTrack()
 const { formMode } = useFormMode()
 const { asideTab, isAsideOpen } = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
-
 const { trackDownloadProgress } = useServerState('index')
 
 const trackUrl = ref('')
@@ -23,6 +22,10 @@ function handlePasteButton() {
 }
 
 function handleSubmit(url?: string) {
+  if (isDownloadingTrack.value) {
+    return
+  }
+
   const input = url ?? trackUrl.value
 
   if (input) {
@@ -68,7 +71,7 @@ function handleSubmit(url?: string) {
       />
       <UButton
         :disabled="!trackUrl || isDownloadingTrack"
-        :is-loading="isTargetDownloading('index')"
+        :is-loading="isTargetBusy('index')"
         size="icon"
         variant="ghost"
         class="px-0"
