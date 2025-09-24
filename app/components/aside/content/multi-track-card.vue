@@ -31,15 +31,15 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
         <UCardHeader class="aspect-square h-full">
           <NuxtImg :src="coverUrl" class="size-full rounded" />
         </UCardHeader>
-        <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col justify-between self-center *:[text-box:_trim-both_cap_alphabetic]">
+        <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col justify-between self-center *:[text-box:trim-both]">
           <NuxtLink
             :title="data.title"
             :href="trackUrl"
-            class="max-w-fit truncate text-lg font-medium hover:underline"
+            class="max-w-fit -translate-y-0.5 truncate text-lg font-medium hover:underline"
           >
             {{ data.title }}
           </NuxtLink>
-          <p class="text-sm font-medium text-muted-foreground">
+          <p class="-translate-y-0.5 text-sm font-medium text-muted-foreground">
             {{ artist }}
           </p>
           <p class="font-mono text-xs font-medium text-muted-foreground">
