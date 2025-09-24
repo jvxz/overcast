@@ -4,7 +4,9 @@ const useServerStateEvents = createSharedComposable(() => {
   return useEventSource(`/api/state?id=${$sessionId}`, [...SERVER_STATE_EVENTS])
 })
 
-export const useServerStateTarget = createGlobalState(() => ref<'index' | string & {}>('index'))
+export function useServerStateTarget() {
+  return useState('server-state-target', () => ref<'index' | string & {}>('index'))
+}
 
 export function useServerState(target: MaybeRefOrGetter<'index' | string & {}>) {
   const { data: _serverStateData, event: serverState } = useServerStateEvents()
