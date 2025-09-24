@@ -1,4 +1,5 @@
 export const useMultiTrack = createGlobalState(() => {
+  const qc = useQueryClient()
   const multiTracks = ref<Set<string>>(new Set())
 
   function addTrackToMultiTrack(trackUrl: string) {
@@ -9,8 +10,11 @@ export const useMultiTrack = createGlobalState(() => {
     multiTracks.value.delete(trackUrl)
   }
 
+  const containsInvalidTrack = computed(() => Array.from(multiTracks.value).some(url => qc.getQueryState([url])?.status === 'error'))
+
   return {
     addTrackToMultiTrack,
+    containsInvalidTrack,
     multiTracks,
     removeTrackFromMultiTrack,
   }
