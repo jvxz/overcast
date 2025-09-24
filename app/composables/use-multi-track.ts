@@ -1,6 +1,8 @@
+export const useMultiTrackSet = () => useState('multi-track', () => new Set<string>())
+
 export const useMultiTrack = createGlobalState(() => {
   const qc = useQueryClient()
-  const multiTracks = ref<Set<string>>(new Set())
+  const multiTracks = useMultiTrackSet()
 
   function addTrackToMultiTrack(trackUrl: string) {
     multiTracks.value.add(trackUrl)
