@@ -5,6 +5,7 @@ const searchQuery = useArtistSearch()
 const artistUrl = useArtist()
 
 const { data: artistData } = useQuery({
+  enabled: computed(() => !!artistUrl.value),
   queryFn: async () => $fetch('/api/user/meta', {
     onResponse: handleResponseError,
     query: {
