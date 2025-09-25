@@ -63,15 +63,6 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
         :disabled="!hasTracks || isBusy"
         @click="downloadArtistTracks(artistUrl ?? '')"
       >
-        <Icon name="mingcute:plus-line" />
-      </UButton>
-      <UButton
-        :is-loading="isTargetBusy('artist')"
-        size="icon"
-        variant="soft"
-        :disabled="!hasTracks || isBusy"
-        @click="downloadArtistTracks(artistUrl ?? '')"
-      >
         <Icon name="mingcute:download-line" />
       </UButton>
     </div>
