@@ -8,3 +8,6 @@ export type SubmitMode = typeof SUBMIT_MODES[number]
 export const SUBMIT_MODES = ['track', 'artist', 'playlist', 'multi'] as const
 
 export const DATE_FORMAT_STRING = 'MMM D, YYYY, hh:mm a'
+
+// in ms
+export const MAX_MULTI_TRACK_DURATION = 9_000_000
