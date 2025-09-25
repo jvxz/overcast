@@ -70,7 +70,7 @@ export const alertVariants = cva(
     },
     variants: {
       variant: {
-        danger: `${staticStyles.variant.danger} *:data-[slot=alert-description]:text-danger/80`,
+        danger: `${staticStyles.variant.danger} bg-danger/40 text-danger-foreground`,
         default: staticStyles.variant.default,
       },
     },
