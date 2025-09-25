@@ -6,37 +6,7 @@ const QuerySchema = z.object({
 export default defineEventHandler(async (event) => {
   const { nextHref, url } = await validateQueryZod(event, QuerySchema)
 
-  if (nextHref) {
-    return $sc({
-      endpoint: nextHref,
-      options: {
-        params: {
-          linked_partitioning: true,
-        },
-      },
-      schema: UserTracksSchema,
-    })
-  }
-
-  const user = await $sc({
-    endpoint: '/resolve',
-    options: {
-      params: {
-        url,
-      },
-    },
-    schema: UserSchema,
+  return await getArtistTracks(url, {
+    nextHref,
   })
-
-  const userTracks = await $sc({
-    endpoint: `/users/${user.id}/tracks`,
-    options: {
-      params: {
-        linked_partitioning: true,
-      },
-    },
-    schema: UserTracksSchema,
-  })
-
-  return userTracks
 })
