@@ -3,9 +3,11 @@ const props = defineProps<{
   trackUrl: string
 }>()
 
+
 const { downloadTrack, isDownloadingTrack } = useTrack()
 const { removeTrackFromMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState(props.trackUrl)
+const { isOpen: isCoverDialogOpen, trackUrl: coverDialogTrackUrl } = useCoverDialog()
 
 const { data, error, isPending } = useQuery({
   queryFn: async () => $fetch('/api/track/meta', {
@@ -22,6 +24,11 @@ const { data, error, isPending } = useQuery({
 const artist = computed(() => data.value?.publisher_metadata?.artist ?? data.value?.user.username)
 const createdAt = useDateFormat(() => data.value?.created_at ?? '', DATE_FORMAT_STRING)
 const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avatar_url)
+
+function handleOpenCoverDialog() {
+  isCoverDialogOpen.value = true
+  coverDialogTrackUrl.value = props.trackUrl
+}
 </script>
 
 <template>
@@ -29,7 +36,11 @@ const coverUrl = computed(() => data.value?.artwork_url ?? data.value?.user.avat
     <Transition>
       <UCard v-if="!isPending && data" class="absolute size-full flex-row gap-3 p-3">
         <UCardHeader class="aspect-square h-full">
-          <NuxtImg :src="coverUrl" class="size-full rounded" />
+          <NuxtImg
+            :src="coverUrl"
+            class="size-full rounded"
+            @click="handleOpenCoverDialog"
+          />
         </UCardHeader>
         <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col justify-between self-center *:[text-box:trim-both]">
           <NuxtLink

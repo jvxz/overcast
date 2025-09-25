@@ -4,7 +4,7 @@ const props = defineProps<{
 }>()
 
 const qc = useQueryClient()
-
+const { isOpen: isCoverDialogOpen, trackUrl: coverDialogTrackUrl } = useCoverDialog()
 const { downloadTrack, isDownloadingTrack } = useTrack()
 const { addTrackToMultiTrack, multiTracks } = useMultiTrack()
 const { trackDownloadProgress } = useServerState(props.track.permalink_url)
@@ -17,12 +17,23 @@ function handleAddTrackToMultiTrack() {
   qc.setQueryData([props.track.permalink_url], props.track)
   addTrackToMultiTrack(props.track.permalink_url)
 }
+
+function handleOpenCoverDialog() {
+  qc.setQueryData([props.track.permalink_url], props.track)
+
+  isCoverDialogOpen.value = true
+  coverDialogTrackUrl.value = props.track.permalink_url
+}
 </script>
 
 <template>
   <UCard class="relative h-24 w-full flex-row gap-3 p-3">
     <UCardHeader class="aspect-square h-full">
-      <NuxtImg :src="coverUrl" class="size-full rounded" />
+      <NuxtImg
+        :src="coverUrl"
+        class="size-full rounded"
+        @click="handleOpenCoverDialog"
+      />
     </UCardHeader>
     <div class="flex h-[calc(100%-0.5rem)] w-fit flex-1 flex-col justify-between self-center *:[text-box:trim-both]">
       <NuxtLink
