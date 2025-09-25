@@ -1,5 +1,6 @@
 export const DOWNLOADING_TRACK_KEY = 'downloading-track'
 export const DOWNLOADING_MULTI_TRACK_KEY = 'downloading-multi-track'
+export const DOWNLOADING_ARTIST_TRACKS_KEY = 'downloading-artist-tracks'
 
 export const useTrack = createSharedComposable(() => {
   const serverStateTarget = useServerStateTarget()
@@ -44,15 +45,38 @@ export const useTrack = createSharedComposable(() => {
     onSuccess: ({ filename, url }) => downloadFile(url, filename),
   })
 
+  const { isPending: isDownloadingArtistTracks, mutate: downloadArtistTracks } = useMutation({
+    mutationFn: async (artistUrl: string) => {
+      serverStateTarget.value = 'artist'
+
+      const stream = await $fetch<ReadableStream>('/api/user/tracks-audio', {
+        method: 'GET',
+        onResponse: handleResponseError,
+        query: {
+          url: artistUrl,
+        },
+      })
+
+      const blob = await streamToBlob(stream)
+      const url = URL.createObjectURL(blob)
+
+      return { filename: `overcast-${artistUrl.split('/').pop()}-${Date.now()}.zip`, url }
+    },
+    mutationKey: [DOWNLOADING_ARTIST_TRACKS_KEY],
+    onSuccess: ({ filename, url }) => downloadFile(url, filename),
+  })
+
   const isMutating = useIsMutating()
   const isFetching = useIsFetching()
 
   const isBusy = computed<boolean>(() => isMutating.value > 0 || isFetching.value > 0)
 
   return {
+    downloadArtistTracks,
     downloadMultiTracks,
     downloadTrack,
     isBusy,
+    isDownloadingArtistTracks,
     isDownloadingMultiTracks,
     isDownloadingTrack,
   }
