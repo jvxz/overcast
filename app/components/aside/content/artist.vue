@@ -3,6 +3,7 @@ const { serverState, zippingProgress } = useServerState('artist')
 const { downloadArtistTracks, isBusy, isDownloadingArtistTracks } = useTrack()
 const searchQuery = useArtistSearch()
 const artistUrl = useArtist()
+const formMode = useFormMode()
 
 const { data: artistData } = useQuery({
   enabled: computed(() => !!artistUrl.value),
@@ -78,6 +79,17 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
           <p class="w-sm text-center" style="text-wrap: balance;">
             Select an artist by switching to artist mode and entering their url
           </p>
+          <UButton
+            variant="soft"
+            size="sm"
+            class="mt-2"
+            @click="() => {
+              formMode = 'artist'
+              focusUrlForm()
+            }"
+          >
+            Switch to artist mode
+          </UButton>
         </div>
       </Transition>
     </div>

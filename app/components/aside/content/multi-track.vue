@@ -3,6 +3,7 @@ const { serverState, zippingProgress } = useServerState('multi-track')
 const { containsInvalidTrack, multiTracks } = useMultiTrack()
 const { downloadMultiTracks, isBusy, isDownloadingMultiTracks } = useTrack()
 const searchQuery = useMultiTrackSearch()
+const formMode = useFormMode()
 
 const hasTracks = computed(() => multiTracks.value.size > 0)
 const placeholder = computed(() => {
@@ -63,6 +64,17 @@ const placeholder = computed(() => {
           <p class="w-sm text-center" style="text-wrap: balance;">
             Add tracks to the list by switching to multi-track mode, or adding them via the artist tab
           </p>
+          <UButton
+            variant="soft"
+            size="sm"
+            class="mt-2"
+            @click="() => {
+              formMode = 'multi'
+              focusUrlForm()
+            }"
+          >
+            Switch to multi-track mode
+          </UButton>
         </div>
       </Transition>
     </div>
