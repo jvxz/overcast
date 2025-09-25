@@ -92,6 +92,19 @@ export default defineNuxtConfig({
     autoImports: true,
   },
 
+  routeRules: {
+    '/api/user/meta': {
+      cache: {
+        maxAge: 60,
+      },
+    },
+    '/api/user/tracks': {
+      cache: {
+        maxAge: 60,
+      },
+    },
+  },
+
   security: {
     headers: {
       contentSecurityPolicy: {
