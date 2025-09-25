@@ -33,7 +33,7 @@ function handleSubmit(url?: string) {
     if (!isUrl(input)) {
       return serverError.value = {
         fatal: false,
-        message: 'Invalid input. Must be a valid URL',
+        message: 'Invalid input. Must be a SoundCloud URL',
         name: 'Error',
         statusCode: 422,
         unhandled: false,
@@ -63,17 +63,29 @@ function handleSubmit(url?: string) {
     }
   }
 }
+
+const urlFormPlaceholder = computed(() => {
+  switch (formMode.value) {
+    case 'multi':
+      return 'Enter a track URL'
+    case 'artist':
+      return 'Enter an artist URL'
+    default:
+      return 'Enter a track URL'
+  }
+})
 </script>
 
 <template>
-  <UCard class="relative w-full shrink-0 flex-col gap-2 overflow-hidden p-2">
+  <UCard class="relative w-full shrink-0 flex-col gap-2 overflow-hidden p-2 has-focus:border-foreground/20">
     <form
       class="flex w-full items-center gap-3"
       @submit.prevent="handleSubmit()"
     >
       <UInput
+        id="url-form"
         v-model="trackUrl"
-        placeholder="Enter a track URL"
+        :placeholder="urlFormPlaceholder"
         class="border-none bg-transparent px-1.5 shadow-none"
       />
       <UButton
