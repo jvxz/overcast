@@ -7,13 +7,15 @@ export function getOriginalArtworkUrl(url: string) {
   const jpg = url.endsWith('.jpg')
   const png = url.endsWith('.png')
 
-  if (jpeg) {
-    return `${url.slice(0, -5)}-original.jpg`
-  }
+  const bareUrl = url
+    .split('.')
+    .slice(0, -1)
+    .join('.')
+    .split('-')
+    .slice(0, -1)
+    .join('-')
 
-  if (jpg || png) {
-    return `${url.slice(0, -4)}-original.${jpg ? 'jpg' : 'png'}`
-  }
+  const originalUrl = `${bareUrl}-original.${jpeg ? 'jpeg' : jpg ? 'jpg' : png ? 'png' : ''}`
 
-  return url
+  return originalUrl
 }
