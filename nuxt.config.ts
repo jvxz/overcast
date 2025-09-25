@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: {
-        style: 'background-color: var(--color-background);',
+        style: 'background-color: var(--card);',
       },
       title: 'overcast',
     },
