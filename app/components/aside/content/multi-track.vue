@@ -44,11 +44,20 @@ const placeholder = computed(() => {
         <Icon name="mingcute:delete-line" />
       </UButton>
       <UButton
+        v-if="multiTracks.size > 1"
         :is-loading="isTargetBusy('multi-track')"
         size="icon"
         variant="soft"
         :disabled="!hasTracks || isBusy || containsInvalidTrack"
         @click="!containsInvalidTrack && downloadMultiTracks()"
+      >
+        <Icon name="mingcute:download-line" />
+      </UButton>
+      <UButton
+        v-else
+        :disabled="true"
+        size="icon"
+        variant="soft"
       >
         <Icon name="mingcute:download-line" />
       </UButton>

@@ -5,6 +5,13 @@ const QuerySchema = z.object({
 export default defineEventHandler(async (event) => {
   const { urls: trackUrls } = await validateQueryZod(event, QuerySchema)
 
+  if (trackUrls.length <= 1) {
+    throw createError({
+      statusCode: 403,
+      statusMessage: 'At least 2 tracks are required to download',
+    })
+  }
+
   const zipStream = await getMultiTrackZipStream({
     event,
     trackUrls,
