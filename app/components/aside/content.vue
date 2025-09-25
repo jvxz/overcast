@@ -4,7 +4,7 @@ const asideState = useAsideState()
 </script>
 
 <template>
-  <div class="flex min-w-[500px] flex-col gap-2">
+  <div class="flex min-w-[516px] flex-col gap-2">
     <div class="flex h-12 items-center justify-between">
       <h1 class="text-2xl font-medium">
         overcast

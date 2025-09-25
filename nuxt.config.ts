@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   app: {
     head: {
       htmlAttrs: {
-        style: 'background-color: var(--color-background);',
+        style: 'background-color: var(--card);',
       },
       title: 'overcast',
     },
@@ -90,6 +90,19 @@ export default defineNuxtConfig({
 
   nuxtQuery: {
     autoImports: true,
+  },
+
+  routeRules: {
+    '/api/user/meta': {
+      cache: {
+        maxAge: 60,
+      },
+    },
+    '/api/user/tracks': {
+      cache: {
+        maxAge: 60,
+      },
+    },
   },
 
   security: {
