@@ -6,6 +6,7 @@ const formMode = useFormMode()
 const asideState = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState('index')
+const artist = useArtist()
 
 const trackUrl = ref('')
 
@@ -50,6 +51,12 @@ function handleSubmit(url?: string) {
         asideState.value.isAsideOpen = true
 
         addTrackToMultiTrack(input)
+        break
+      case 'artist':
+        asideState.value.asideTab = 'artist'
+        asideState.value.isAsideOpen = true
+
+        artist.value = input
         break
       default:
         break
