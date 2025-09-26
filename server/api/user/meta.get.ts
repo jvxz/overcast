@@ -13,5 +13,6 @@ export default defineEventHandler(async (event) => {
       },
     },
     schema: UserSchema,
+    type: 'artist',
   })
 })

@@ -8,5 +8,6 @@ export async function getTrackMeta(url: string) {
       retry: false,
     },
     schema: TrackSchema,
+    type: 'track',
   })
 }

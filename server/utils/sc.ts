@@ -5,12 +5,13 @@ interface Params<T> {
   options?: Parameters<typeof $fetch>[1]
   schema: z.ZodType<T>
   manualClientId?: string
+  type?: 'track' | 'artist'
 }
 
 /**
  * hit the soundcloud api
  */
-export async function $sc<T>({ endpoint, options, schema }: Params<T>) {
+export async function $sc<T>({ endpoint, options, schema, type }: Params<T>) {
   const { getClientId } = useClientId()
 
   let clientId = await getClientId()
@@ -32,10 +33,26 @@ export async function $sc<T>({ endpoint, options, schema }: Params<T>) {
   const parsed = schema.safeParse(res)
 
   if (!parsed.success) {
+    if (type === 'track') {
+      throw createError({
+        data: parsed.error,
+        statusCode: 422,
+        statusMessage: `Failed to parse track data. Did you provide a valid URL?`,
+      })
+    }
+
+    if (type === 'artist') {
+      throw createError({
+        data: parsed.error,
+        statusCode: 422,
+        statusMessage: `Failed to parse artist data. Did you provide a valid URL?`,
+      })
+    }
+
     throw createError({
       data: parsed.error,
-      statusCode: 500,
-      statusMessage: 'Failed to parse SoundCloud response',
+      statusCode: 422,
+      statusMessage: `Failed to parse SoundCloud response`,
     })
   }
 
@@ -60,6 +77,20 @@ export async function $sc<T>({ endpoint, options, schema }: Params<T>) {
     }
 
     if (res.status === 404) {
+      if (type === 'track') {
+        throw createError({
+          statusCode: 404,
+          statusMessage: `Could not find track. Did you provide a valid URL?`,
+        })
+      }
+
+      if (type === 'artist') {
+        throw createError({
+          statusCode: 404,
+          statusMessage: `Could not find artist. Did you provide a valid URL?`,
+        })
+      }
+
       throw createError({
         statusCode: 404,
         statusMessage: 'Could not find resource. Did you provide a valid SoundCloud URL?',
