@@ -14,6 +14,7 @@ export default withNuxt(
       'node/prefer-global/buffer': 'off',
       'node/prefer-global/process': 'off',
       'perfectionist/sort-objects': 'warn',
+      'vue/component-name-in-template-casing': ['warn', 'PascalCase'],
       'vue/html-self-closing': 'off',
       'vue/max-attributes-per-line': [
         'warn',
@@ -37,5 +38,6 @@ export default withNuxt(
     },
     typescript: true,
     vue: true,
+
   }),
 )
