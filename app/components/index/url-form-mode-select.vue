@@ -30,7 +30,7 @@ function isActive(mode: SubmitMode) {
         layout-id="form-mode-select"
         :transition="{
           type: 'tween',
-          duration: 0.15,
+          duration: 0.10,
           ease: 'easeOut',
         }"
         class="absolute inset-0 size-full rounded bg-muted bg-blend-lighten"

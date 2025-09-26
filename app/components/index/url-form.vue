@@ -47,14 +47,12 @@ function handleSubmit(url?: string) {
         downloadTrack({ target: 'index', trackUrl: input })
         break
       case 'multi':
-        asideState.value.asideTab = 'multi-track'
-        asideState.value.isAsideOpen = true
+        asideState.value = 'multi-track'
 
         addTrackToMultiTrack(input)
         break
       case 'artist':
-        asideState.value.asideTab = 'artist'
-        asideState.value.isAsideOpen = true
+        asideState.value = 'artist'
 
         artist.value = input
         break

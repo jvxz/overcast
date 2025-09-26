@@ -16,13 +16,13 @@ const asideState = useAsideState()
         <UButton
           variant="ghost"
           size="icon"
-          @click="asideState.isAsideOpen = false"
+          @click="asideState = null"
         >
           <Icon name="mingcute:align-arrow-left-line" class="!size-4" />
         </UButton>
       </div>
     </div>
-    <AsideContentArtist v-if="asideState.asideTab === 'artist'" />
-    <AsideContentMultiTrack v-if="asideState.asideTab === 'multi-track'" />
+    <AsideContentArtist v-if="asideState === 'artist'" />
+    <AsideContentMultiTrack v-if="asideState === 'multi-track'" />
   </div>
 </template>
