@@ -7,6 +7,7 @@ const asideState = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState('index')
 const artist = useArtist()
+const { playlistUrl } = usePlaylist()
 
 const trackUrl = ref('')
 
@@ -44,17 +45,22 @@ function handleSubmit(url?: string) {
 
     switch (formMode.value) {
       case 'track':
-        downloadTrack({ target: 'index', trackUrl: input })
+        downloadTrack({ target: 'index', trackUrl: removeSearchParams(input) })
         break
       case 'multi':
         asideState.value = 'multi-track'
 
-        addTrackToMultiTrack(input)
+        addTrackToMultiTrack(removeSearchParams(input))
         break
       case 'artist':
         asideState.value = 'artist'
 
-        artist.value = input
+        artist.value = removeSearchParams(input)
+        break
+      case 'playlist':
+        asideState.value = 'playlist'
+
+        playlistUrl.value = removeSearchParams(input)
         break
       default:
         break
@@ -68,6 +74,8 @@ const urlFormPlaceholder = computed(() => {
       return 'Enter a track URL'
     case 'artist':
       return 'Enter an artist URL'
+    case 'playlist':
+      return 'Enter a playlist URL'
     default:
       return 'Enter a track URL'
   }
