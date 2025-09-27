@@ -1,11 +1,11 @@
-import type { z } from 'zod'
+import { z } from 'zod'
 
 interface Params<T> {
   endpoint: string
   options?: Parameters<typeof $fetch>[1]
   schema: z.ZodType<T>
   manualClientId?: string
-  type?: 'track' | 'artist'
+  type?: 'track' | 'artist' | 'playlist'
 }
 
 /**
@@ -35,7 +35,7 @@ export async function $sc<T>({ endpoint, options, schema, type }: Params<T>) {
   if (!parsed.success) {
     if (type === 'track') {
       throw createError({
-        data: parsed.error,
+        data: z.treeifyError(parsed.error),
         statusCode: 422,
         statusMessage: `Failed to parse track data. Did you provide a valid URL?`,
       })
@@ -43,14 +43,22 @@ export async function $sc<T>({ endpoint, options, schema, type }: Params<T>) {
 
     if (type === 'artist') {
       throw createError({
-        data: parsed.error,
+        data: z.treeifyError(parsed.error),
         statusCode: 422,
         statusMessage: `Failed to parse artist data. Did you provide a valid URL?`,
       })
     }
 
+    if (type === 'playlist') {
+      throw createError({
+        data: z.treeifyError(parsed.error),
+        statusCode: 422,
+        statusMessage: `Failed to parse playlist data. Did you provide a valid URL?`,
+      })
+    }
+
     throw createError({
-      data: parsed.error,
+      data: z.treeifyError(parsed.error),
       statusCode: 422,
       statusMessage: `Failed to parse SoundCloud response`,
     })
@@ -88,6 +96,13 @@ export async function $sc<T>({ endpoint, options, schema, type }: Params<T>) {
         throw createError({
           statusCode: 404,
           statusMessage: `Could not find artist. Did you provide a valid URL?`,
+        })
+      }
+
+      if (type === 'playlist') {
+        throw createError({
+          statusCode: 404,
+          statusMessage: `Could not find playlist. Did you provide a valid URL?`,
         })
       }
 

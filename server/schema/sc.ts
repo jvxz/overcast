@@ -172,3 +172,17 @@ export const UserTracksSchema = z.object({
   next_href: z.string().nullable(),
   total: z.number().optional(),
 })
+
+export type PlaylistResolveData = z.infer<typeof PlaylistResolveSchema>
+export const PlaylistResolveSchema = z.object({
+  permalink: z.string(),
+  tracks: z.array(z.union([
+    TrackSchema.describe('Track with data'),
+    TrackSchema.pick({
+      id: true,
+      kind: true,
+      monetization_model: true,
+      policy: true,
+    }).describe('Track without data'),
+  ])),
+})
