@@ -110,10 +110,12 @@ export default defineNuxtConfig({
       contentSecurityPolicy: {
         'img-src': [
           'data:',
-          'https://i1.sndcdn.com',
+          'https://i1.sndcdn.com', // covers
+          'https://a1.sndcdn.com', // avatars
         ],
       },
     },
+    rateLimiter: process.env.NODE_ENV === 'production' ? undefined : false,
   },
 
   vite: {
