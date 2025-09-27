@@ -16,6 +16,8 @@ onPaste((text) => {
   handleSubmit()
 })
 
+onStartTyping(() => focusUrlForm())
+
 function handlePasteButton() {
   navigator.clipboard.readText().then((text) => {
     trackUrl.value = text
@@ -84,49 +86,49 @@ const urlFormPlaceholder = computed(() => {
 
 <template>
   <ProgressBar :progress="trackDownloadProgress">
-  <UCard class="relative w-full shrink-0 flex-col gap-2 overflow-hidden p-2 has-focus:border-foreground/20">
-    <form
-      class="flex w-full items-center gap-3"
-      @submit.prevent="handleSubmit()"
-    >
-      <UInput
-        id="url-form"
-        v-model="trackUrl"
-        :placeholder="urlFormPlaceholder"
-        class="border-none bg-transparent px-1.5 shadow-none"
-      />
-      <UButton
-        :disabled="!trackUrl || isDownloadingTrack"
-        :is-loading="isTargetBusy('index')"
-        size="icon"
-        class="px-0"
+    <UCard class="relative w-full shrink-0 flex-col gap-2 overflow-hidden p-2 has-focus:border-foreground/20">
+      <form
+        class="flex w-full items-center gap-3"
+        @submit.prevent="handleSubmit()"
       >
-        <Icon :name="formMode === 'multi' ? 'mingcute:add-line' : 'mingcute:arrow-right-line'" />
-      </UButton>
-    </form>
-    <div class="flex w-full items-center">
-      <IndexUrlFormModeSelect />
-      <div class="flex shrink-0 items-center gap-1">
+        <UInput
+          id="url-form"
+          v-model="trackUrl"
+          :placeholder="urlFormPlaceholder"
+          class="border-none bg-transparent px-1.5 shadow-none"
+        />
         <UButton
-          v-if="formMode === 'multi' || formMode === 'track'"
+          :disabled="!trackUrl || isDownloadingTrack"
+          :is-loading="isTargetBusy('index')"
           size="icon"
-          variant="ghost"
-          aria-label="Paste"
-          @click="formMode === 'multi' ? formMode = 'track' : formMode = 'multi'"
+          class="px-0"
         >
-          <Icon :name="formMode === 'multi' ? 'mingcute:square-line' : 'mingcute:grid-line'" />
+          <Icon :name="formMode === 'multi' ? 'mingcute:add-line' : 'mingcute:arrow-right-line'" />
         </UButton>
-        <UButton
-          v-if="isSupported"
-          aria-label="Paste"
-          variant="ghost"
-          size="icon"
-          @click="handlePasteButton"
-        >
-          <Icon name="mingcute:clipboard-line" />
-        </UButton>
+      </form>
+      <div class="flex w-full items-center">
+        <IndexUrlFormModeSelect />
+        <div class="flex shrink-0 items-center gap-1">
+          <UButton
+            v-if="formMode === 'multi' || formMode === 'track'"
+            size="icon"
+            variant="ghost"
+            aria-label="Paste"
+            @click="formMode === 'multi' ? formMode = 'track' : formMode = 'multi'"
+          >
+            <Icon :name="formMode === 'multi' ? 'mingcute:square-line' : 'mingcute:grid-line'" />
+          </UButton>
+          <UButton
+            v-if="isSupported"
+            aria-label="Paste"
+            variant="ghost"
+            size="icon"
+            @click="handlePasteButton"
+          >
+            <Icon name="mingcute:clipboard-line" />
+          </UButton>
+        </div>
       </div>
-    </div>
-  </UCard>
+    </UCard>
   </ProgressBar>
 </template>
