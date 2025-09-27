@@ -14,6 +14,9 @@ const { data: artistData } = useQuery({
     },
   }),
   queryKey: [artistUrl],
+  refetchOnMount: false,
+  refetchOnReconnect: false,
+  refetchOnWindowFocus: false,
   retry: false,
   staleTime: 600000,
 })
