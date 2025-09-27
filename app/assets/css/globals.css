@@ -151,7 +151,7 @@
     @apply scrollbar-fancy;
   }
   body {
-    @apply bg-background text-foreground font-sans antialiased text-pretty min-h-screen;
+    @apply bg-background text-foreground font-sans antialiased text-pretty min-h-screen underline-offset-2;
     letter-spacing: 0.02em;
   }
 
