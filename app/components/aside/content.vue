@@ -7,7 +7,7 @@ const asideState = useAsideState()
   <div class="flex min-w-[516px] flex-col gap-2">
     <div class="flex h-12 items-center justify-between">
       <h1 class="text-2xl font-medium">
-        overcast
+        {{ toCapitalized(asideState ?? '') }}
       </h1>
       <div class="flex items-center gap-2">
         <p class="font-mono text-sm font-medium text-muted-foreground">
