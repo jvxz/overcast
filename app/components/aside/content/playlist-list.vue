@@ -36,9 +36,7 @@ function scrollToTop() {
           :track="track.data"
         >
         </AsideContentPlaylistTrackCard>
-        <UCard v-if="isLoadingNextChunk" class="h-24 border-none items-center justify-center">
-          <USpinner class="!size-10" />
-        </UCard>
+        <AsideContentLoadingCard v-if="isLoadingNextChunk" />
       </template>
       <template v-else>
         <UCard

@@ -90,6 +90,7 @@ useInfiniteScroll(containerProps.ref, () => refresh(), {
           :key="track.data.id"
           :track="track.data"
         />
+        <AsideContentLoadingCard v-if="pending" />
       </template>
       <template v-else>
         <UCard
