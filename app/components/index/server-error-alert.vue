@@ -21,7 +21,7 @@ const codeMap = {
     <UAlertRoot
       v-if="serverError"
       variant="danger"
-      class="flex flex-col p-4 glow-red-900"
+      class="absolute inset-0 flex h-fit flex-col p-4 glow-red-900"
     >
       <div class="flex w-full items-center justify-between">
         <UAlertTitle>

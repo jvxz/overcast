@@ -9,7 +9,10 @@
       </div>
       <IndexUrlForm />
       <div class="flex-1">
-        <IndexServerErrorAlert />
+        <div class="relative size-full">
+          <IndexServerErrorAlert />
+          <IndexTabUserAlert />
+        </div>
       </div>
     </div>
   </UCard>
