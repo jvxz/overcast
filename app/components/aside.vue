@@ -33,6 +33,7 @@ const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
       <UButton
         v-for="tab in ASIDE_TABS"
         :key="tab"
+        :data-active="tab === asideState"
         class="relative size-12 bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:text-foreground"
         variant="ghost"
         @click="handleTabClick(tab)"
