@@ -11,7 +11,7 @@ function handleTabClick(tab: typeof ASIDE_TABS[number]) {
   asideState.value = tab
 }
 
-const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
+const tabMap: Record<Exclude<typeof ASIDE_TABS[number], 'about'>, { icon: string }> = {
   'artist': {
     icon: 'mingcute:user-2-line',
   },
@@ -31,7 +31,7 @@ const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
   >
     <div class="flex w-12 shrink-0 flex-col gap-1">
       <UButton
-        v-for="tab in ASIDE_TABS"
+        v-for="tab in ASIDE_TABS.filter(tab => tab !== 'about')"
         :key="tab"
         :data-active="tab === asideState"
         class="relative size-12 bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:text-foreground"
@@ -49,6 +49,16 @@ const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
           }"
           class="absolute inset-0 size-full rounded bg-muted"
         />
+      </UButton>
+
+      <div class="flex-1" />
+
+      <UButton
+        class="relative size-12 bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:text-foreground"
+        variant="ghost"
+        @click="handleTabClick('about')"
+      >
+        <Icon name="mingcute:information-line" class="z-10 !size-8" />
       </UButton>
     </div>
 
