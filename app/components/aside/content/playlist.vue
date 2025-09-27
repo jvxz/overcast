@@ -63,14 +63,34 @@ const placeholder = computed(() => {
     <div class="relative h-full w-full">
       <Transition>
         <AsideContentPlaylistList
-          v-if="playlistUrl"
+          v-if="playlistUrl && allTrackIds.length"
           @pending="pending = $event"
           @track-ids="allTrackIds = $event"
         />
+        <div v-else-if="playlistUrl && !allTrackIds.length" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+          <Icon name="mingcute:ghost-line" class="!size-16" />
+          <h1 class="text-lg font-medium">
+            Playlist has no tracks
+          </h1>
+          <p class="w-sm text-center" style="text-wrap: balance;">
+            Consider selecting a different playlist
+          </p>
+          <UButton
+            variant="soft"
+            size="sm"
+            class="mt-2"
+            @click="() => {
+              formMode = 'playlist'
+              focusUrlForm()
+            }"
+          >
+            Switch to playlist mode
+          </UButton>
+        </div>
         <div v-else-if="!playlistUrl" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
           <Icon name="mingcute:ghost-line" class="!size-16" />
           <h1 class="text-lg font-medium">
-            Playlist not selected
+            No playlist selected
           </h1>
           <p class="w-sm text-center" style="text-wrap: balance;">
             Select a playlist by switching to playlist mode and entering its url

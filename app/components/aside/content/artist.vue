@@ -71,7 +71,27 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
     </div>
     <div class="relative h-full w-full">
       <Transition>
-        <LazyAsideContentArtistList v-if="artistUrl" @pending="pending = $event" />
+        <LazyAsideContentArtistList v-if="artistUrl && artistData?.track_count" @pending="pending = $event" />
+        <div v-else-if="artistUrl && !artistData?.track_count" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+          <Icon name="mingcute:ghost-line" class="!size-16" />
+          <h1 class="text-lg font-medium">
+            Artist has no tracks
+          </h1>
+          <p class="w-sm text-center" style="text-wrap: balance;">
+            Consider selecting a different artist
+          </p>
+          <UButton
+            variant="soft"
+            size="sm"
+            class="mt-2"
+            @click="() => {
+              formMode = 'artist'
+              focusUrlForm()
+            }"
+          >
+            Switch to artist mode
+          </UButton>
+        </div>
         <div v-else-if="!artistUrl" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
           <Icon name="mingcute:ghost-line" class="!size-16" />
           <h1 class="text-lg font-medium">

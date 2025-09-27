@@ -84,19 +84,20 @@ useInfiniteScroll(containerProps.ref, () => refresh(), {
 <template>
   <div v-bind="containerProps" class="h-full">
     <div v-bind="wrapperProps" class="*:mb-3 last:mb-0">
-      <LazyAsideContentArtistTrackCard
-        v-for="track in tracks"
-        :key="track.data.id"
-        :track="track.data"
-      >
-      </LazyAsideContentArtistTrackCard>
-      <LazyUCard v-if="nextHref" class="relative h-24 w-full items-center justify-center border-none p-3">
-        <LazyUSpinner
-          v-if="pending"
-          invert
-          class="!size-12"
+      <template v-if="tracks.length">
+        <AsideContentArtistTrackCard
+          v-for="track in tracks"
+          :key="track.data.id"
+          :track="track.data"
         />
-      </LazyUCard>
+      </template>
+      <template v-else>
+        <UCard
+          v-for="i in 6"
+          :key="i"
+          class="h-24 animate-pulse"
+        />
+      </template>
     </div>
   </div>
 </template>
