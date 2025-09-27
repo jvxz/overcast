@@ -18,6 +18,9 @@ const tabMap: Record<typeof ASIDE_TABS[number], { icon: string }> = {
   'multi-track': {
     icon: 'mingcute:grid-line',
   },
+  'playlist': {
+    icon: 'mingcute:playlist-line',
+  },
 }
 </script>
 
