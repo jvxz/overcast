@@ -25,15 +25,19 @@ export const usePlaylist = createSharedComposable((opts?: {
 
   const idsToFetch = computed(() => playlistTrackChunks.value?.[currentChunkIndex.value] ?? [])
 
-  const { data: currentChunkData, isLoading: isLoadingNextChunk, refetch: getChunk } = useQuery({
+  const { isLoading: isLoadingNextChunk, refetch: getChunk } = useQuery({
     enabled: computed(() => playlistTrackChunks.value && currentChunkIndex.value < chunkTotal.value),
-    queryFn: async () => $fetch('/api/playlist/tracks', {
-      body: {
-        ids: idsToFetch.value,
-      },
-      method: 'POST',
-      onResponse: handleResponseError,
-    }),
+    queryFn: async () => {
+      const chunks = await $fetch('/api/playlist/tracks', {
+        body: {
+          ids: idsToFetch.value,
+        },
+        method: 'POST',
+        onResponse: handleResponseError,
+      })
+
+      cachedTracks.value = [...cachedTracks.value, ...chunks.map(track => markRaw(track))]
+    },
     queryKey: computed(() => [playlistUrl.value, currentChunkIndex.value]),
     retry: false,
     staleTime: 600000,
@@ -43,13 +47,6 @@ export const usePlaylist = createSharedComposable((opts?: {
     currentChunkIndex.value = currentChunkIndex.value + 1
     getChunk()
   }
-
-  watch(currentChunkData, (newChunk) => {
-    if (newChunk) {
-      const rawTracks = newChunk.map(track => markRaw(track))
-      cachedTracks.value = [...cachedTracks.value, ...rawTracks]
-    }
-  })
 
   watch(playlistTrackChunks, () => {
     if (playlistTrackChunks.value) {

@@ -1,14 +1,6 @@
 <script lang="ts" setup>
-const emit = defineEmits<{
-  pending: [boolean]
-}>()
-
-const { cachedTracks, canLoadMore, getNextChunk, isLoadingNextChunk, isLoadingPlaylistTrackChunks } = usePlaylist({
+const { cachedTracks, canLoadMore, getNextChunk, isLoadingNextChunk } = usePlaylist({
   onPlaylistUrlChange: () => scrollToTop(),
-})
-
-watch([isLoadingNextChunk, isLoadingPlaylistTrackChunks], (newPending) => {
-  emit('pending', newPending.some(Boolean))
 })
 
 const { containerProps, list: tracks, scrollTo, wrapperProps } = useVirtualList(cachedTracks, {

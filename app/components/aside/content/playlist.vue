@@ -1,11 +1,10 @@
 <script lang="ts" setup>
-const { allTrackIds, playlistUrl } = usePlaylist()
+const { allTrackIds, cachedTracks, isLoadingNextChunk, isLoadingPlaylistTrackChunks, playlistUrl } = usePlaylist()
 const formMode = useFormMode()
-
-const pending = ref(false)
-
 const { serverState, zippingProgress } = useServerState('playlist')
 const { downloadPlaylistTracks, isBusy } = useTrack()
+
+const pending = computed(() => isLoadingNextChunk.value || isLoadingPlaylistTrackChunks.value)
 
 const placeholder = computed(() => {
   if (serverState.value === 'preparing') {
@@ -36,7 +35,7 @@ const placeholder = computed(() => {
           <div
             :class="cn(
               interactiveStyles.size.default, 'flex w-full min-w-0 cursor-text items-center truncate rounded border py-1 pl-8 text-sm font-medium text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:ring-0 md:text-sm',
-              (pending || !allTrackIds.length) && 'opacity-50',
+              (pending || !cachedTracks.length) && 'opacity-50',
             )"
           >
             {{ placeholder }}
@@ -61,12 +60,8 @@ const placeholder = computed(() => {
     </div>
     <div class="relative h-full w-full">
       <Transition>
-        <AsideContentPlaylistList
-          v-if="playlistUrl && allTrackIds.length"
-          @pending="pending = $event"
-          @track-ids="allTrackIds = $event"
-        />
-        <div v-else-if="playlistUrl && !allTrackIds.length" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+        <AsideContentPlaylistList v-if="cachedTracks.length || isLoadingNextChunk || isLoadingPlaylistTrackChunks" />
+        <div v-else-if="playlistUrl && !cachedTracks.length" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
           <Icon name="mingcute:ghost-line" class="!size-16" />
           <h1 class="text-lg font-medium">
             Playlist has no tracks
