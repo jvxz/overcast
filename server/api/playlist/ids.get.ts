@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
     type: 'playlist',
   })
 
-  const chunkSize = 16
+  const chunkSize = 24
 
   const trackIdChunks: number[][] = []
   for (let i = 0; i < trackIds.length; i += chunkSize) {
