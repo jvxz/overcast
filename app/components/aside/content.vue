@@ -23,6 +23,7 @@ const asideState = useAsideState()
       </div>
     </div>
     <AsideContentArtist v-if="asideState === 'artist'" />
+    <AsideContentPlaylist v-if="asideState === 'playlist'" />
     <AsideContentMultiTrack v-if="asideState === 'multi-track'" />
   </div>
 </template>
