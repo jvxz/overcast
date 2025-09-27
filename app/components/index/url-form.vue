@@ -83,6 +83,7 @@ const urlFormPlaceholder = computed(() => {
 </script>
 
 <template>
+  <ProgressBar :progress="trackDownloadProgress">
   <UCard class="relative w-full shrink-0 flex-col gap-2 overflow-hidden p-2 has-focus:border-foreground/20">
     <form
       class="flex w-full items-center gap-3"
@@ -103,7 +104,6 @@ const urlFormPlaceholder = computed(() => {
         <Icon :name="formMode === 'multi' ? 'mingcute:add-line' : 'mingcute:arrow-right-line'" />
       </UButton>
     </form>
-    <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${trackDownloadProgress}%` }"></div>
     <div class="flex w-full items-center">
       <IndexUrlFormModeSelect />
       <div class="flex shrink-0 items-center gap-1">
@@ -128,4 +128,5 @@ const urlFormPlaceholder = computed(() => {
       </div>
     </div>
   </UCard>
+  </ProgressBar>
 </template>

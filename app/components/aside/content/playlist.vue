@@ -32,7 +32,7 @@ const placeholder = computed(() => {
   <div class="flex h-full w-full flex-col items-center gap-4">
     <div class="flex w-full items-center gap-2">
       <div class="relative w-full">
-        <div class="relative">
+        <ProgressBar :progress="zippingProgress">
           <div
             :class="cn(
               interactiveStyles.size.default, 'flex w-full min-w-0 cursor-text items-center truncate rounded border py-1 pl-8 text-sm font-medium text-muted-foreground selection:bg-primary selection:text-primary-foreground focus-visible:ring-0 md:text-sm',
@@ -41,8 +41,7 @@ const placeholder = computed(() => {
           >
             {{ placeholder }}
           </div>
-          <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${zippingProgress}%` }"></div>
-        </div>
+        </ProgressBar>
         <USpinner v-if="pending" class="absolute inset-0 top-1/2 left-2 z-10 !size-5 -translate-y-1/2" />
         <Icon
           v-else
