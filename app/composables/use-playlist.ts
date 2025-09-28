@@ -18,10 +18,6 @@ export const usePlaylist = createSharedComposable((opts?: {
       },
     }),
     queryKey: [playlistUrl],
-    refetchOnMount: false,
-    refetchOnReconnect: false,
-    refetchOnWindowFocus: false,
-    retry: false,
     staleTime: 600000,
   })
 
@@ -41,7 +37,6 @@ export const usePlaylist = createSharedComposable((opts?: {
       cachedTracks.value = [...cachedTracks.value, ...chunks.map(track => markRaw(track))]
     },
     queryKey: computed(() => playlistUrl.value ? [playlistUrl.value, currentChunkIndex.value] : []),
-    retry: false,
     staleTime: 600000,
   })
 

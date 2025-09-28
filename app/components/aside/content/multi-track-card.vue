@@ -17,7 +17,6 @@ const { data, error, isPending } = useQuery({
     },
   }),
   queryKey: [props.trackUrl],
-  retry: false,
   staleTime: 600000,
 })
 

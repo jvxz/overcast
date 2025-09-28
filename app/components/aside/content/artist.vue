@@ -6,7 +6,7 @@ const artistUrl = useArtist()
 const formMode = useFormMode()
 
 const { data: artistData } = useQuery({
-  enabled: computed(() => !!artistUrl.value),
+  enabled: () => !!artistUrl.value,
   queryFn: async () => $fetch('/api/user/meta', {
     onResponse: handleResponseError,
     query: {
@@ -14,10 +14,6 @@ const { data: artistData } = useQuery({
     },
   }),
   queryKey: [artistUrl],
-  refetchOnMount: false,
-  refetchOnReconnect: false,
-  refetchOnWindowFocus: false,
-  retry: false,
   staleTime: 600000,
 })
 
