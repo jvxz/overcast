@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-const { allTrackIds, cachedTracks, isLoadingNextChunk, isLoadingPlaylistTrackChunks, playlistUrl } = usePlaylist()
+const { allTrackIds, cachedTracks, isLoadingNextChunk, isLoadingPlaylistTrackChunks } = usePlaylist()
+const playlistUrl = usePlaylistUrl()
 const formMode = useFormMode()
 const { serverState, zippingProgress } = useServerState('playlist')
 const { downloadPlaylistTracks, isBusy } = useTrack()

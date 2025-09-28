@@ -7,7 +7,7 @@ const asideState = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState('index')
 const artist = useArtist()
-const { playlistUrl } = usePlaylist()
+const playlistUrl = usePlaylistUrl()
 
 const trackUrl = ref('')
 
