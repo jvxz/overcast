@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full -translate-x-7.5 flex-col items-center justify-center">
+  <div class="flex h-full xl:-translate-x-7.5 flex-col items-center justify-center">
     <div class="flex h-28 gap-4">
       <div class="h-full">
         <Logo class="aspect-square !size-full" />
