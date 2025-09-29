@@ -10,6 +10,18 @@ function isActive(mode: SubmitMode) {
 
   return mode === formMode.value
 }
+
+const SUBMIT_MODE_MAP: Record<Exclude<typeof SUBMIT_MODES[number], 'multi'>, { icon: string }> = {
+  artist: {
+    icon: 'mingcute:user-2-line',
+  },
+  playlist: {
+    icon: 'mingcute:playlist-line',
+  },
+  track: {
+    icon: 'mingcute:music-line',
+  },
+}
 </script>
 
 <template>
@@ -22,12 +34,13 @@ function isActive(mode: SubmitMode) {
       class="relative bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:text-foreground"
       @click="formMode = mode"
     >
-      <p class="z-10">
+      <p class="z-10 hidden xl:block">
         {{ mode }}
       </p>
+      <Icon :name="SUBMIT_MODE_MAP[mode].icon" class="z-10 xl:!hidden" />
       <motion.div
         v-if="isActive(mode)"
-        layout-id="form-mode-select"
+        layout-id="form-mode-select-mobile"
         :transition="{
           type: 'tween',
           duration: 0.10,
