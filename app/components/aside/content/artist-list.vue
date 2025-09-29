@@ -67,7 +67,7 @@ watchEffect(async () => {
 
 const { containerProps, list: tracks, scrollTo, wrapperProps } = useVirtualList(filteredTracks, {
   itemHeight: 108,
-  overscan: 1,
+  overscan: 3,
 })
 
 function scrollToTop() {

@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-const { allTrackIds, cachedTracks, isLoadingNextChunk, isLoadingPlaylistTrackChunks, playlistUrl } = usePlaylist()
+const { allTrackIds, cachedTracks, isLoadingNextChunk, isLoadingPlaylistTrackChunks } = usePlaylist()
+const playlistUrl = usePlaylistUrl()
 const formMode = useFormMode()
 const { serverState, zippingProgress } = useServerState('playlist')
 const { downloadPlaylistTracks, isBusy } = useTrack()
@@ -66,7 +67,7 @@ const placeholder = computed(() => {
           <h1 class="text-lg font-medium">
             Playlist has no tracks
           </h1>
-          <p class="w-sm text-center" style="text-wrap: balance;">
+          <p class="w-xs text-center md:w-sm" style="text-wrap: balance;">
             Consider selecting a different playlist
           </p>
           <UButton
@@ -86,7 +87,7 @@ const placeholder = computed(() => {
           <h1 class="text-lg font-medium">
             No playlist selected
           </h1>
-          <p class="w-sm text-center" style="text-wrap: balance;">
+          <p class="w-xs text-center md:w-sm" style="text-wrap: balance;">
             Select a playlist by switching to playlist mode and entering its url
           </p>
           <UButton

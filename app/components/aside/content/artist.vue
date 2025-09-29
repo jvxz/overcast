@@ -6,7 +6,7 @@ const artistUrl = useArtist()
 const formMode = useFormMode()
 
 const { data: artistData } = useQuery({
-  enabled: computed(() => !!artistUrl.value),
+  enabled: () => !!artistUrl.value,
   queryFn: async () => $fetch('/api/user/meta', {
     onResponse: handleResponseError,
     query: {
@@ -14,7 +14,6 @@ const { data: artistData } = useQuery({
     },
   }),
   queryKey: [artistUrl],
-  retry: false,
   staleTime: 600000,
 })
 
@@ -77,7 +76,7 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
           <h1 class="text-lg font-medium">
             Artist has no tracks
           </h1>
-          <p class="w-sm text-center" style="text-wrap: balance;">
+          <p class="w-xs md:w-sm text-center" style="text-wrap: balance;">
             Consider selecting a different artist
           </p>
           <UButton
@@ -97,7 +96,7 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
           <h1 class="text-lg font-medium">
             Artist not selected
           </h1>
-          <p class="w-sm text-center" style="text-wrap: balance;">
+          <p class="w-xs md:w-sm text-center" style="text-wrap: balance;">
             Select an artist by switching to artist mode and entering their url
           </p>
           <UButton

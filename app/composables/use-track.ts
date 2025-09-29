@@ -16,7 +16,6 @@ export const useTrack = createSharedComposable(() => {
         query: {
           url: trackUrl,
         },
-        retry: false,
       })
     },
     mutationKey: [DOWNLOADING_TRACK_KEY],

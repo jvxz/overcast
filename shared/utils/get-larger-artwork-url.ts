@@ -1,4 +1,4 @@
-export async function getOriginalArtworkUrl(url: string) {
+export function getLargerArtworkUrl(url: string) {
   if (url.includes('-original.')) {
     return url
   }
@@ -17,15 +17,5 @@ export async function getOriginalArtworkUrl(url: string) {
     .slice(0, -1)
     .join('-')
 
-  let maxUrl: string | null = null
-
-  for (const size of ['original', 'large', 'small']) {
-    const res = await fetch(`${bareUrl}-${size}.${ext}`, { method: 'HEAD' })
-    if (res.ok) {
-      maxUrl = `${bareUrl}-${size}.${ext}`
-      break
-    }
-  }
-
-  return maxUrl ?? url
+  return `${bareUrl}-t500x500.${ext}`
 }

@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { breakpointsTailwind } from '@vueuse/core'
+
 const { isSupported } = useClipboardItems()
 const serverError = useServerError()
 const { downloadTrack, isDownloadingTrack } = useTrack()
@@ -7,8 +9,10 @@ const asideState = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState('index')
 const artist = useArtist()
-const { playlistUrl } = usePlaylist()
+const playlistUrl = usePlaylistUrl()
+const breakpoints = useBreakpoints(breakpointsTailwind)
 
+const isDesktop = breakpoints.xl
 const trackUrl = ref('')
 
 onPaste((text) => {
@@ -50,7 +54,9 @@ function handleSubmit(url?: string) {
         downloadTrack({ target: 'index', trackUrl: removeSearchParams(input) })
         break
       case 'multi':
-        asideState.value = 'multi-track'
+        if (!isDesktop) {
+          asideState.value = 'multi-track'
+        }
 
         addTrackToMultiTrack(removeSearchParams(input))
         break

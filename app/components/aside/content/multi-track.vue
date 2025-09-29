@@ -70,7 +70,7 @@ const placeholder = computed(() => {
           <h1 class="text-lg font-medium">
             No tracks added
           </h1>
-          <p class="w-sm text-center" style="text-wrap: balance;">
+          <p class="w-xs text-center md:w-sm" style="text-wrap: balance;">
             Add tracks to the list by switching to multi-track mode, or adding them via the artist tab
           </p>
           <UButton

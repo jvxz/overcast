@@ -4,7 +4,7 @@ export async function writeTrackTags({ audioBuffer, trackMeta }: { audioBuffer: 
   const writer = new ID3Writer(audioBuffer)
 
   const tags: Record<string, string | string[] | { description: string, text: string } | null> = {
-    APIC: trackMeta.artwork_url?.replace('large', 'original') ?? trackMeta.user.avatar_url.replace('large', 'original'),
+    APIC: await getOriginalArtworkUrl(trackMeta.artwork_url ?? trackMeta.user.avatar_url),
     COMM: trackMeta.description
       ? {
           description: 'Comment',
@@ -24,7 +24,7 @@ export async function writeTrackTags({ audioBuffer, trackMeta }: { audioBuffer: 
     }
 
     if (tag === 'APIC') {
-      const arrayBuffer = await $fetch<ArrayBufferLike>(getOriginalArtworkUrl(value as string), {
+      const arrayBuffer = await $fetch<ArrayBufferLike>(await getOriginalArtworkUrl(value as string), {
         responseType: 'arrayBuffer',
       })
 

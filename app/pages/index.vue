@@ -1,19 +1,17 @@
 <template>
-  <UCard class="flex h-full flex-col items-center justify-center gap-4 bg-background">
-    <div class="flex h-full w-xl animate-in flex-col gap-4 duration-200 fade-in-0 zoom-in-90">
-      <div class="flex w-full flex-1 items-end justify-center">
-        <h1 class="flex items-center justify-center gap-1 text-4xl font-medium">
-          <Logo class="!size-11" />
-          overcast
-        </h1>
-      </div>
-      <IndexUrlForm />
-      <div class="flex-1">
-        <div class="relative size-full">
-          <IndexServerErrorAlert />
-          <IndexTabUserAlert />
-        </div>
+  <div class="flex h-full w-full animate-in flex-col gap-4 duration-200 fade-in-0 zoom-in-90 md:w-2/3 xl:w-xl 2xl:w-xl">
+    <div class="flex w-full flex-1 items-end justify-center">
+      <h1 class="flex items-center justify-center gap-1 text-4xl font-medium">
+        <Logo class="!size-11" />
+        overcast
+      </h1>
+    </div>
+    <IndexUrlForm />
+    <div class="flex-1">
+      <div class="relative size-full">
+        <IndexServerErrorAlert />
+        <IndexTabUserAlert />
       </div>
     </div>
-  </UCard>
+  </div>
 </template>
