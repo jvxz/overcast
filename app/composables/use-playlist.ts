@@ -1,12 +1,16 @@
 export const usePlaylistUrl = createGlobalState(() => ref<string | null>(null))
 
-export const usePlaylist = createSharedComposable((opts?: {
+const usePlaylistValues = createGlobalState(() => ({
+  allTrackIds: ref<number[]>([]),
+  cachedTracks: shallowRef<TrackData[]>([]),
+  chunkTotal: ref(0),
+  currentChunkIndex: ref(0),
+}))
+
+export function usePlaylist(opts?: {
   onPlaylistUrlChange?: () => void
-}) => {
-  const allTrackIds = ref<number[]>([])
-  const cachedTracks = shallowRef<TrackData[]>([])
-  const chunkTotal = ref(0)
-  const currentChunkIndex = ref(0)
+}) {
+  const { allTrackIds, cachedTracks, chunkTotal, currentChunkIndex } = usePlaylistValues()
   const playlistUrl = usePlaylistUrl()
 
   const { data: playlistTrackChunks, isLoading: isLoadingPlaylistTrackChunks } = useQuery({
@@ -35,6 +39,8 @@ export const usePlaylist = createSharedComposable((opts?: {
       })
 
       cachedTracks.value = [...cachedTracks.value, ...chunks.map(track => markRaw(track))]
+
+      return chunks
     },
     queryKey: computed(() => playlistUrl.value ? [playlistUrl.value, currentChunkIndex.value] : []),
     staleTime: 600000,
@@ -75,4 +81,4 @@ export const usePlaylist = createSharedComposable((opts?: {
     isLoadingNextChunk,
     isLoadingPlaylistTrackChunks,
   }
-})
+}
