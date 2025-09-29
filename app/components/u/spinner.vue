@@ -1,9 +1,18 @@
 <script setup lang="ts">
 defineOptions({ name: 'Spinner' })
-
-defineProps<{
+const props = defineProps<{
   invert?: boolean
 }>()
+
+const colorMode = useColorMode()
+
+const stroke = computed(() => {
+  if (colorMode.value === 'dark') {
+    return props.invert ? 'var(--primary-foreground)' : 'var(--muted-foreground)'
+  }
+
+  return props.invert ? 'var(--muted-foreground)' : 'var(--primary-foreground)'
+})
 </script>
 
 <template>
@@ -11,7 +20,7 @@ defineProps<{
     viewBox="0 0 100 100"
     xmlns="http://www.w3.org/2000/svg"
     v-bind="$attrs"
-    :style="invert ? { '--spinner-stroke': 'var(--primary-foreground)' } : { '--spinner-stroke': 'var(--muted-foreground)' }"
+    :style="{ '--spinner-stroke': stroke }"
   >
     <title>Loading...</title>
     <path
