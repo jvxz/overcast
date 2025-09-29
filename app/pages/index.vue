@@ -1,5 +1,5 @@
 <template>
-  <div class="flex h-full w-xl animate-in flex-col gap-4 duration-200 fade-in-0 zoom-in-90 xl:w-lg 2xl:w-xl">
+  <div class="flex h-full w-full animate-in flex-col gap-4 px-4 duration-200 fade-in-0 zoom-in-90 md:w-2/3 md:px-0 xl:w-xl 2xl:w-xl">
     <div class="flex w-full flex-1 items-end justify-center">
       <h1 class="flex items-center justify-center gap-1 text-4xl font-medium">
         <Logo class="!size-11" />
