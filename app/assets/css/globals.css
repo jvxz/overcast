@@ -1,6 +1,8 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
+@custom-variant dark (&:where(.dark-mode, .dark-mode *));
+
 @theme inline {
   --font-sans: 'Pretendard', sans-serif;
   --font-mono: 'Lilex', monospace;
@@ -84,21 +86,21 @@
   --aside-width-open: 36rem;
 
   --background: hsl(0 0% 98.8235%);
-  --foreground: hsl(0 0% 20%);
+  --foreground: hsl(0 0% 8%);
   --card: hsl(0 0% 100%);
-  --card-foreground: hsl(0 0% 20%);
+  --card-foreground: hsl(0 0% 8%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(0 0% 26.6667%);
   --primary: hsl(246.8919 74% 60.7843%);
   --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(0 0% 20%);
+  --secondary: hsl(0 0% 8%);
   --secondary-foreground: hsl(0 0% 100%);
   --muted: hsl(0 0% 92.1569%);
   --muted-foreground: hsl(0 0% 26.6667%);
   --accent: hsl(246.8919 74% 60.7843%);
   --accent-foreground: hsl(0 0% 100%);
-  --danger: hsl(352.6829 86.014% 28.0392%);
-  --danger-foreground: hsl(0 0% 100%);
+  --danger: hsl(352.6829 50.014% 50.0392%);
+  --danger-foreground: hsl(0 0% 8%);
   --border: hsl(0 0% 81.9608%);
   --input: hsl(0 0% 80%);
   --ring: hsl(246.8919 74% 60.7843%);
@@ -122,7 +124,8 @@
   --muted-foreground: hsl(0 0% 74.1176%);
   --accent: hsl(245.4545 100% 59.0196%);
   --accent-foreground: hsl(0 0% 100%);
-  --danger: hsl(0 57.5758% 25.8824%);
+  --danger: hsl(352.6829 50.014% 50.0392%);
+
   --danger-foreground: hsl(0 0% 100%);
   --border: hsl(0 0% 12.9804%);
   --input: hsl(0 0% 21.9608%);
