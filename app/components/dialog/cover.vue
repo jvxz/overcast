@@ -1,16 +1,19 @@
 <script lang="ts" setup>
 const { isOpen, trackUrl } = useCoverDialog()
 
-const { data: trackData } = useFetch('/api/track/meta', {
-  immediate: false,
-  key: computed(() => trackUrl.value ?? ''),
-  onResponse: handleResponseError,
-  query: {
-    url: trackUrl,
-  },
+const { data: trackData } = useQuery({
+  enabled: computed(() => !!trackUrl.value),
+  queryFn: async () => $fetch('/api/track/meta', {
+    onResponse: handleResponseError,
+    query: {
+      url: trackUrl,
+    },
+  }),
+  queryKey: [trackUrl],
+  retry: false,
+  staleTime: 600000,
 })
 
-const coverUrl = computed(() => getLargerArtworkUrl(trackData.value?.artwork_url ?? trackData.value?.user.avatar_url ?? ''))
 const artist = computed(() => trackData.value?.publisher_metadata?.artist ?? trackData.value?.user.username)
 </script>
 
@@ -23,12 +26,12 @@ const artist = computed(() => trackData.value?.publisher_metadata?.artist ?? tra
       </UDialogHeader>
       <NuxtImg
         fit="cover"
-        :src="coverUrl"
+        :src="getLargerArtworkUrl(trackData?.artwork_url ?? trackData?.user.avatar_url ?? '')"
         class="size-[534px] rounded bg-muted"
       />
       <UDialogFooter>
         <UButton
-          @click="downloadFile(coverUrl)"
+          @click="downloadFile(getLargerArtworkUrl(trackData?.artwork_url ?? trackData?.user.avatar_url ?? ''))"
         >
           Download cover
         </UButton>
