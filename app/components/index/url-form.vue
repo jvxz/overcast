@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { breakpointsTailwind } from '@vueuse/core'
 
-const { isSupported } = useClipboardItems()
 const serverError = useServerError()
 const { downloadTrack, isDownloadingTrack } = useTrack()
 const formMode = useFormMode()
@@ -12,6 +11,7 @@ const artist = useArtist()
 const playlistUrl = usePlaylistUrl()
 const breakpoints = useBreakpoints(breakpointsTailwind)
 
+const canPaste = usePermission('clipboard-read')
 const isDesktop = breakpoints.xl
 const trackUrl = ref('')
 
@@ -125,11 +125,11 @@ const urlFormPlaceholder = computed(() => {
             <Icon :name="formMode === 'multi' ? 'mingcute:square-line' : 'mingcute:grid-line'" />
           </UButton>
           <UButton
-            v-if="isSupported"
+            :disabled="canPaste === 'denied'"
             aria-label="Paste"
             variant="ghost"
             size="icon"
-            @click="handlePasteButton"
+            @click="canPaste === 'granted' && handlePasteButton()"
           >
             <Icon name="mingcute:clipboard-line" />
           </UButton>
