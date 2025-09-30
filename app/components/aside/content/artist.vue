@@ -5,7 +5,7 @@ const searchQuery = useArtistSearch()
 const artistUrl = useArtist()
 const formMode = useFormMode()
 
-const { data: artistData } = useQuery({
+const { data: artistData, error } = useQuery({
   enabled: () => !!artistUrl.value,
   queryFn: async () => $fetch('/api/user/meta', {
     onResponse: handleResponseError,
@@ -14,8 +14,11 @@ const { data: artistData } = useQuery({
     },
   }),
   queryKey: [artistUrl],
+  retry: false,
   staleTime: 600000,
 })
+
+whenever(error, () => artistUrl.value = null)
 
 const hasTracks = computed(() => artistData.value?.track_count ?? 0)
 const placeholder = computed(() => {
@@ -70,14 +73,14 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
     </div>
     <div class="relative h-full w-full">
       <Transition>
-        <LazyAsideContentArtistList v-if="artistUrl && artistData?.track_count" @pending="pending = $event" />
-        <div v-else-if="artistUrl && !artistData?.track_count" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+        <AsideContentArtistList v-if="artistUrl" @pending="pending = $event" />
+        <div v-else-if="!artistUrl" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
           <Icon name="mingcute:ghost-line" class="!size-16" />
           <h1 class="text-lg font-medium">
-            Artist has no tracks
+            Artist not selected
           </h1>
-          <p class="w-xs md:w-sm text-center" style="text-wrap: balance;">
-            Consider selecting a different artist
+          <p class="w-xs text-center md:w-sm" style="text-wrap: balance;">
+            Select an artist by switching to artist mode and entering their url
           </p>
           <UButton
             variant="soft"
@@ -91,13 +94,13 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
             Switch to artist mode
           </UButton>
         </div>
-        <div v-else-if="!artistUrl" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+        <div v-else-if="!artistData?.track_count" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
           <Icon name="mingcute:ghost-line" class="!size-16" />
           <h1 class="text-lg font-medium">
-            Artist not selected
+            Artist has no tracks
           </h1>
-          <p class="w-xs md:w-sm text-center" style="text-wrap: balance;">
-            Select an artist by switching to artist mode and entering their url
+          <p class="w-xs text-center md:w-sm" style="text-wrap: balance;">
+            Consider selecting a different artist
           </p>
           <UButton
             variant="soft"

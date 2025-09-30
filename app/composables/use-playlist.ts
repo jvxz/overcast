@@ -13,7 +13,7 @@ export function usePlaylist(opts?: {
   const { allTrackIds, cachedTracks, chunkTotal, currentChunkIndex } = usePlaylistValues()
   const playlistUrl = usePlaylistUrl()
 
-  const { data: playlistTrackChunks, isLoading: isLoadingPlaylistTrackChunks } = useQuery({
+  const { data: playlistTrackChunks, error, isLoading: isLoadingPlaylistTrackChunks } = useQuery({
     enabled: computed(() => !!playlistUrl.value),
     queryFn: async () => $fetch('/api/playlist/ids', {
       onResponse: handleResponseError,
@@ -22,8 +22,11 @@ export function usePlaylist(opts?: {
       },
     }),
     queryKey: [playlistUrl],
+    retry: false,
     staleTime: 600000,
   })
+
+  whenever(error, () => playlistUrl.value = null)
 
   const idsToFetch = computed(() => playlistTrackChunks.value?.[currentChunkIndex.value] ?? [])
 
@@ -43,6 +46,7 @@ export function usePlaylist(opts?: {
       return chunks
     },
     queryKey: computed(() => playlistUrl.value ? [playlistUrl.value, currentChunkIndex.value] : []),
+    retry: false,
     staleTime: 600000,
   })
 
