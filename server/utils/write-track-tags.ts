@@ -14,7 +14,7 @@ export async function writeTrackTags({ audioBuffer, trackMeta }: { audioBuffer: 
     TCON: trackMeta.genre ? [trackMeta.genre] : null,
     TDAT: trackMeta.display_date,
     TIT2: trackMeta.title,
-    TPE1: [trackMeta.publisher_metadata?.artist ?? trackMeta.user.full_name],
+    TPE1: [trackMeta.publisher_metadata?.artist ?? trackMeta.user.username],
     WOAS: trackMeta.permalink_url,
   }
 
