@@ -17,6 +17,7 @@
     "@nuxt/icon": "^2.0.0",
     "@nuxt/image": "^1.11.0",
     "@nuxtjs/color-mode": "^3.5.2",
+    "@nuxtjs/seo": "3.2.2",
     "@peterbud/nuxt-query": "1.1.0",
     "@tailwindcss/vite": "^4.1.13",
     "@tanstack/vue-query": "^5.90.2",
@@ -57,5 +58,6 @@
     "overrides": {
       "vite": "npm:rolldown-vite@latest"
     }
-  }
+  },
+  "packageManager": "pnpm@10.17.1+sha512.17c560fca4867ae9473a3899ad84a88334914f379be46d455cbf92e5cf4b39d34985d452d2583baf19967fa76cb5c17bc9e245529d0b98745721aa7200ecaf7a"
 }

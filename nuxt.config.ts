@@ -7,7 +7,10 @@ export default defineNuxtConfig({
       htmlAttrs: {
         style: 'background-color: var(--card);',
       },
-      title: 'overcast',
+      link: [
+        { href: '/favicon.ico', rel: 'icon', type: 'image/x-icon' },
+      ],
+      titleTemplate: '%siteName',
     },
   },
 
@@ -58,6 +61,7 @@ export default defineNuxtConfig({
     'nuxt-security',
     '@peterbud/nuxt-query',
     'nuxt-auth-utils',
+    '@nuxtjs/seo',
   ],
 
   nitro: {
@@ -109,6 +113,7 @@ export default defineNuxtConfig({
     headers: {
       contentSecurityPolicy: {
         'img-src': [
+          process.env.NUXT_PUBLIC_SITE_URL!,
           'data:',
           'https://i1.sndcdn.com', // covers
           'https://a1.sndcdn.com', // avatars
@@ -116,6 +121,11 @@ export default defineNuxtConfig({
       },
     },
     rateLimiter: process.env.NODE_ENV === 'production' ? undefined : false,
+    sri: false, // for bundled font files
+  },
+
+  site: {
+    name: 'overcast',
   },
 
   vite: {
