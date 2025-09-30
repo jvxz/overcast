@@ -3,14 +3,6 @@ import { motion } from 'motion-v'
 
 const formMode = useFormMode()
 
-function isActive(mode: SubmitMode) {
-  if (mode === 'track' || mode === 'multi') {
-    return mode === 'track' || mode === 'multi'
-  }
-
-  return mode === formMode.value
-}
-
 const SUBMIT_MODE_MAP: Record<Exclude<typeof SUBMIT_MODES[number], 'multi'>, { icon: string }> = {
   artist: {
     icon: 'mingcute:user-2-line',
@@ -22,6 +14,14 @@ const SUBMIT_MODE_MAP: Record<Exclude<typeof SUBMIT_MODES[number], 'multi'>, { i
     icon: 'mingcute:music-line',
   },
 }
+
+const activeMode = computed<SubmitMode[]>(() => {
+  if (formMode.value === 'track' || formMode.value === 'multi') {
+    return ['track', 'multi']
+  }
+
+  return [formMode.value]
+})
 </script>
 
 <template>
@@ -30,8 +30,8 @@ const SUBMIT_MODE_MAP: Record<Exclude<typeof SUBMIT_MODES[number], 'multi'>, { i
       v-for="mode in SUBMIT_MODES.filter(mode => mode !== 'multi')"
       :key="mode"
       variant="ghost"
-      :data-active="isActive(mode)"
-      class="relative bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:text-foreground"
+      class="relative bg-transparent hover:bg-muted/50 disabled:opacity-100"
+      :class="activeMode.includes(mode) ? 'text-foreground' : ''"
       @click="formMode = mode"
     >
       <p class="z-10 hidden xl:block">
@@ -39,7 +39,7 @@ const SUBMIT_MODE_MAP: Record<Exclude<typeof SUBMIT_MODES[number], 'multi'>, { i
       </p>
       <Icon :name="SUBMIT_MODE_MAP[mode].icon" class="z-10 xl:!hidden" />
       <motion.div
-        v-if="isActive(mode)"
+        v-if="activeMode.includes(mode)"
         layout-id="form-mode-select-mobile"
         :transition="{
           type: 'tween',
