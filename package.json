@@ -32,6 +32,7 @@
     "motion-v": "^1.7.1",
     "nuxt": "^4.1.1",
     "nuxt-auth-utils": "0.5.25",
+    "nuxt-posthog": "1.6.3",
     "nuxt-security": "^2.4.0",
     "p-limit": "^7.1.1",
     "reka-ui": "^2.5.0",

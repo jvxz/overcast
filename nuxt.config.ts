@@ -62,6 +62,7 @@ export default defineNuxtConfig({
     '@peterbud/nuxt-query',
     'nuxt-auth-utils',
     '@nuxtjs/seo',
+    'nuxt-posthog',
   ],
 
   nitro: {
@@ -94,6 +95,10 @@ export default defineNuxtConfig({
 
   nuxtQuery: {
     autoImports: true,
+  },
+
+  posthog: {
+    proxy: true,
   },
 
   routeRules: {

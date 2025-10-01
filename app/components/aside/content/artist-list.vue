@@ -3,6 +3,7 @@ const emit = defineEmits<{
   pending: [boolean]
 }>()
 
+const { $clientPosthog } = useNuxtApp()
 const nextHref = ref<string | null>(null)
 const artist = useArtist()
 const searchQuery = useArtistSearch()
@@ -27,6 +28,7 @@ watch(fetchedData, (newData) => {
 })
 
 watch(artist, () => {
+  $clientPosthog?.capture('artist')
   cachedData.value = null
   nextHref.value = null
   refresh()

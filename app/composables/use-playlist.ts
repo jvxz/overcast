@@ -10,6 +10,7 @@ const usePlaylistValues = createGlobalState(() => ({
 export function usePlaylist(opts?: {
   onPlaylistUrlChange?: () => void
 }) {
+  const { $clientPosthog } = useNuxtApp()
   const { allTrackIds, cachedTracks, chunkTotal, currentChunkIndex } = usePlaylistValues()
   const playlistUrl = usePlaylistUrl()
 
@@ -65,6 +66,7 @@ export function usePlaylist(opts?: {
 
   watch(playlistUrl, (newUrl) => {
     if (newUrl) {
+      $clientPosthog?.capture('playlist')
       currentChunkIndex.value = 0
       chunkTotal.value = 0
       allTrackIds.value = []

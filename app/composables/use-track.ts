@@ -3,6 +3,7 @@ export const DOWNLOADING_MULTI_TRACK_KEY = 'downloading-multi-track'
 export const DOWNLOADING_ARTIST_TRACKS_KEY = 'downloading-artist-tracks'
 
 export const useTrack = createSharedComposable(() => {
+  const { $clientPosthog } = useNuxtApp()
   const serverStateTarget = useServerStateTarget()
   const { multiTracks } = useMultiTrack()
 
@@ -19,7 +20,10 @@ export const useTrack = createSharedComposable(() => {
       })
     },
     mutationKey: [DOWNLOADING_TRACK_KEY],
-    onSuccess: url => downloadFile(url),
+    onSuccess: (url) => {
+      downloadFile(url)
+      $clientPosthog?.capture('single-file')
+    },
   })
 
   const { isPending: isDownloadingMultiTracks, mutate: downloadMultiTracks } = useMutation({
@@ -41,7 +45,10 @@ export const useTrack = createSharedComposable(() => {
       return { filename: `overcast-${Date.now()}.zip`, url }
     },
     mutationKey: [DOWNLOADING_MULTI_TRACK_KEY],
-    onSuccess: ({ filename, url }) => downloadFile(url, filename),
+    onSuccess: ({ filename, url }) => {
+      downloadFile(url, filename)
+      $clientPosthog?.capture('multi')
+    },
   })
 
   const { isPending: isDownloadingArtistTracks, mutate: downloadArtistTracks } = useMutation({
@@ -62,7 +69,10 @@ export const useTrack = createSharedComposable(() => {
       return { filename: `${artistUrl.split('/').pop()}-${Date.now()}.zip`, url }
     },
     mutationKey: [DOWNLOADING_ARTIST_TRACKS_KEY],
-    onSuccess: ({ filename, url }) => downloadFile(url, filename),
+    onSuccess: ({ filename, url }) => {
+      downloadFile(url, filename)
+      $clientPosthog?.capture('download-artist-tracks')
+    },
   })
 
   const { isPending: isDownloadingPlaylistTracks, mutate: downloadPlaylistTracks } = useMutation({
@@ -84,7 +94,10 @@ export const useTrack = createSharedComposable(() => {
       return { filename: `${playlistUrl.split('/').pop()}-${Date.now()}.zip`, url }
     },
     mutationKey: [DOWNLOADING_ARTIST_TRACKS_KEY],
-    onSuccess: ({ filename, url }) => downloadFile(url, filename),
+    onSuccess: ({ filename, url }) => {
+      downloadFile(url, filename)
+      $clientPosthog?.capture('download-playlist-tracks')
+    },
   })
 
   const isMutating = useIsMutating()
