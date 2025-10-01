@@ -2,7 +2,7 @@ export const DOWNLOADING_TRACK_KEY = 'downloading-track'
 export const DOWNLOADING_MULTI_TRACK_KEY = 'downloading-multi-track'
 export const DOWNLOADING_ARTIST_TRACKS_KEY = 'downloading-artist-tracks'
 
-export const useTrack = createSharedComposable(() => {
+export const useDownload = createSharedComposable(() => {
   const { $clientPosthog } = useNuxtApp()
   const serverStateTarget = useServerStateTarget()
   const { multiTracks } = useMultiTrack()

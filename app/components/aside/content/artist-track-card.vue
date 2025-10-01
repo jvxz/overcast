@@ -5,7 +5,7 @@ const props = defineProps<{
 
 const qc = useQueryClient()
 const { isOpen: isCoverDialogOpen, trackUrl: coverDialogTrackUrl } = useCoverDialog()
-const { downloadTrack, isDownloadingTrack } = useTrack()
+const { downloadTrack, isDownloadingTrack } = useDownload()
 const { addTrackToMultiTrack, multiTracks } = useMultiTrack()
 const { trackDownloadProgress } = useServerState(props.track.permalink_url)
 

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const { serverState, zippingProgress } = useServerState('multi-track')
 const { containsInvalidTrack, multiTracks } = useMultiTrack()
-const { downloadMultiTracks, isBusy, isDownloadingMultiTracks } = useTrack()
+const { downloadMultiTracks, isBusy, isDownloadingMultiTracks } = useDownload()
 const searchQuery = useMultiTrackSearch()
 const formMode = useFormMode()
 

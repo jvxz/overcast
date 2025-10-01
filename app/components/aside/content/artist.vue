@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 const { serverState, zippingProgress } = useServerState('artist')
-const { downloadArtistTracks, isBusy, isDownloadingArtistTracks } = useTrack()
+const { downloadArtistTracks, isBusy, isDownloadingArtistTracks } = useDownload()
 const searchQuery = useArtistSearch()
 const artistUrl = useArtist()
 const formMode = useFormMode()

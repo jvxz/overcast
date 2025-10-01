@@ -3,7 +3,7 @@ const { allTrackIds, cachedTracks, isLoadingNextChunk, isLoadingPlaylistTrackChu
 const playlistUrl = usePlaylistUrl()
 const formMode = useFormMode()
 const { serverState, zippingProgress } = useServerState('playlist')
-const { downloadPlaylistTracks, isBusy } = useTrack()
+const { downloadPlaylistTracks, isBusy } = useDownload()
 
 const pending = computed(() => isLoadingNextChunk.value || isLoadingPlaylistTrackChunks.value)
 

@@ -3,7 +3,7 @@ const props = defineProps<{
   trackUrl: string
 }>()
 
-const { downloadTrack, isDownloadingTrack } = useTrack()
+const { downloadTrack, isDownloadingTrack } = useDownload()
 const { removeTrackFromMultiTrack } = useMultiTrack()
 const { trackDownloadProgress } = useServerState(props.trackUrl)
 const { isOpen: isCoverDialogOpen, trackUrl: coverDialogTrackUrl } = useCoverDialog()

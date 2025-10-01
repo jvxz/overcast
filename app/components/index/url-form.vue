@@ -2,7 +2,7 @@
 import { breakpointsTailwind } from '@vueuse/core'
 
 const serverError = useServerError()
-const { downloadTrack, isDownloadingTrack } = useTrack()
+const { downloadTrack, isDownloadingTrack } = useDownload()
 const formMode = useFormMode()
 const asideState = useAsideState()
 const { addTrackToMultiTrack } = useMultiTrack()
