@@ -1,6 +1,5 @@
 FROM node:22-alpine AS build
 
-
 WORKDIR /app
 
 RUN corepack enable
@@ -11,6 +10,7 @@ RUN pnpm i
 
 COPY . ./
 
+ARG NUXT_PUBLIC_SITE_URL
 ARG REDIS_URL
 RUN pnpm run build
 
