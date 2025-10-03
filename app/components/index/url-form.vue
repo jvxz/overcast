@@ -23,6 +23,10 @@ onPaste((text) => {
 onStartTyping(() => focusUrlForm())
 
 function handlePasteButton() {
+  if (canPaste.value === 'denied') {
+    return
+  }
+
   navigator.clipboard.readText().then((text) => {
     trackUrl.value = text
     handleSubmit(text)
@@ -129,7 +133,7 @@ const urlFormPlaceholder = computed(() => {
             aria-label="Paste"
             variant="ghost"
             size="icon"
-            @click="canPaste === 'granted' && handlePasteButton()"
+            @click=" handlePasteButton()"
           >
             <Icon name="mingcute:clipboard-line" />
           </UButton>
