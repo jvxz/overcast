@@ -7,14 +7,14 @@ export async function writeTrackTags({ audioBuffer, trackMeta }: { audioBuffer: 
     APIC: await getOriginalArtworkUrl(trackMeta.artwork_url ?? trackMeta.user.avatar_url),
     COMM: trackMeta.description
       ? {
-          description: 'Comment',
+          description: 'comment',
           text: trackMeta.description,
         }
       : null,
     TCON: trackMeta.genre ? [trackMeta.genre] : null,
-    TDAT: trackMeta.display_date,
     TIT2: trackMeta.title,
     TPE1: [trackMeta.publisher_metadata?.artist ?? trackMeta.user.username],
+    TYER: trackMeta.display_date.slice(0, 4),
     WOAS: trackMeta.permalink_url,
   }
 
@@ -30,7 +30,7 @@ export async function writeTrackTags({ audioBuffer, trackMeta }: { audioBuffer: 
 
       writer.setFrame('APIC', {
         data: arrayBuffer,
-        description: 'Attached cover',
+        description: 'attached cover',
         // CoverFront = 0x03
         type: 0x03,
       })
