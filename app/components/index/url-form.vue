@@ -55,24 +55,24 @@ function handleSubmit(url?: string) {
 
     switch (formMode.value) {
       case 'track':
-        downloadTrack({ target: 'index', trackUrl: removeSearchParams(input) })
+        downloadTrack({ target: 'index', trackUrl: formatScUrl(input) })
         break
       case 'multi':
         if (!isDesktop) {
           asideState.value = 'multi-track'
         }
 
-        addTrackToMultiTrack(removeSearchParams(input))
+        addTrackToMultiTrack(formatScUrl(input))
         break
       case 'artist':
         asideState.value = 'artist'
 
-        artist.value = removeSearchParams(input)
+        artist.value = formatScUrl(input)
         break
       case 'playlist':
         asideState.value = 'playlist'
 
-        playlistUrl.value = removeSearchParams(input)
+        playlistUrl.value = formatScUrl(input)
         break
       default:
         break
