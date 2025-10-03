@@ -38,6 +38,7 @@ const placeholder = computed(() => {
       <UButton
         size="icon"
         variant="soft"
+        aria-label="Clear all tracks"
         :disabled="!hasTracks || isBusy"
         @click="multiTracks.clear()"
       >
@@ -48,6 +49,7 @@ const placeholder = computed(() => {
         :is-loading="isTargetBusy('multi-track')"
         size="icon"
         variant="soft"
+        aria-label="Download all tracks as zip"
         :disabled="!hasTracks || isBusy || containsInvalidTrack"
         @click="!containsInvalidTrack && downloadMultiTracks()"
       >
@@ -58,6 +60,7 @@ const placeholder = computed(() => {
         :disabled="true"
         size="icon"
         variant="soft"
+        aria-label="You must add at least 2 tracks to download as zip"
       >
         <Icon name="mingcute:download-line" />
       </UButton>
@@ -77,6 +80,7 @@ const placeholder = computed(() => {
             variant="soft"
             size="sm"
             class="mt-2"
+            aria-label="Switch to multi-track mode"
             @click="() => {
               formMode = 'multi'
               focusUrlForm()

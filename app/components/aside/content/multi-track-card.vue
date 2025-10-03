@@ -63,6 +63,7 @@ function handleOpenCoverDialog() {
           <UButton
             size="icon"
             variant="ghost"
+            aria-label="Download track"
             :is-loading="isTargetBusy(props.trackUrl)"
             :disabled="isDownloadingTrack"
             @click="downloadTrack({ target: props.trackUrl, trackUrl: props.trackUrl })"
@@ -72,6 +73,7 @@ function handleOpenCoverDialog() {
           <UButton
             size="icon"
             variant="ghost"
+            aria-label="Remove track from list"
             @click="removeTrackFromMultiTrack(trackUrl)"
           >
             <Icon name="mingcute:delete-line" />
@@ -98,12 +100,14 @@ function handleOpenCoverDialog() {
           :disabled="true"
           size="icon"
           variant="ghost"
+          aria-label="Download track"
         >
           <Icon name="mingcute:download-line" />
         </UButton>
         <UButton
           size="icon"
           variant="ghost"
+          aria-label="Remove track from list"
           @click="removeTrackFromMultiTrack(trackUrl)"
         >
           <Icon name="mingcute:delete-line" />

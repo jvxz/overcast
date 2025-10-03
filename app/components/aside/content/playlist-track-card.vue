@@ -55,6 +55,7 @@ function handleOpenCoverDialog() {
         <UButton
           size="icon"
           variant="ghost"
+          aria-label="Download track"
           :is-loading="isTargetBusy(track.permalink_url)"
           :disabled="isDownloadingTrack"
           @click="downloadTrack({ target: track.permalink_url, trackUrl: track.permalink_url })"
@@ -65,6 +66,7 @@ function handleOpenCoverDialog() {
           v-if="!multiTracks.has(track.permalink_url)"
           size="icon"
           variant="ghost"
+          aria-label="Add track to multi-track list"
           @click="handleAddTrackToMultiTrack"
         >
           <Icon name="mingcute:plus-line" />
@@ -74,6 +76,7 @@ function handleOpenCoverDialog() {
           :disabled="true"
           size="icon"
           variant="ghost"
+          aria-label="Track already in multi-track list"
         >
           <Icon name="mingcute:check-line" />
         </UButton>

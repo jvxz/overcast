@@ -53,6 +53,7 @@ const placeholder = computed(() => {
         :is-loading="isTargetBusy('playlist')"
         size="icon"
         variant="soft"
+        aria-label="Download all playlist tracks as zip"
         :disabled="!playlistUrl || isBusy"
         @click="downloadPlaylistTracks({ ids: allTrackIds, playlistUrl: playlistUrl ?? '' })"
       >
@@ -74,6 +75,7 @@ const placeholder = computed(() => {
             variant="soft"
             size="sm"
             class="mt-2"
+            aria-label="Switch to playlist mode"
             @click="() => {
               formMode = 'playlist'
               focusUrlForm()
@@ -94,6 +96,7 @@ const placeholder = computed(() => {
             variant="soft"
             size="sm"
             class="mt-2"
+            aria-label="Switch to playlist mode"
             @click="() => {
               formMode = 'playlist'
               focusUrlForm()

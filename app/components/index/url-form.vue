@@ -110,6 +110,7 @@ const urlFormPlaceholder = computed(() => {
         <UButton
           :disabled="!trackUrl || isDownloadingTrack"
           :is-loading="isTargetBusy('index')"
+          :aria-label="formMode === 'multi' ? 'Add track' : 'Submit'"
           size="icon"
           class="px-0"
         >
@@ -123,7 +124,7 @@ const urlFormPlaceholder = computed(() => {
             v-if="formMode === 'multi' || formMode === 'track'"
             size="icon"
             variant="ghost"
-            aria-label="Paste"
+            :aria-label="formMode === 'multi' ? 'Switch to track mode' : 'Switch to multi-track mode'"
             @click="formMode === 'multi' ? formMode = 'track' : formMode = 'multi'"
           >
             <Icon :name="formMode === 'multi' ? 'mingcute:square-line' : 'mingcute:grid-line'" />

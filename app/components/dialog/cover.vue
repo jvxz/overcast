@@ -31,6 +31,7 @@ const artist = computed(() => trackData.value?.publisher_metadata?.artist ?? tra
       />
       <UDialogFooter>
         <UButton
+          aria-label="Download cover art"
           @click="downloadFile(getLargerArtworkUrl(trackData?.artwork_url ?? trackData?.user.avatar_url ?? ''))"
         >
           Download cover

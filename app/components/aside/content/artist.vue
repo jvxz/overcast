@@ -64,6 +64,7 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
         :is-loading="isTargetBusy('artist')"
         size="icon"
         variant="soft"
+        aria-label="Download all artist tracks as zip"
         :disabled="!hasTracks || isBusy"
         @click="downloadArtistTracks(artistUrl ?? '')"
       >
@@ -84,6 +85,7 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
             variant="soft"
             size="sm"
             class="mt-2"
+            aria-label="Switch to artist mode"
             @click="() => {
               formMode = 'artist'
               focusUrlForm()
@@ -105,6 +107,7 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
             variant="soft"
             size="sm"
             class="mt-2"
+            aria-label="Switch to artist mode"
             @click="() => {
               formMode = 'artist'
               focusUrlForm()

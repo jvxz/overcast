@@ -30,6 +30,7 @@ const tabMap: Record<Exclude<typeof ASIDE_TABS[number], 'about'>, { icon: string
       v-for="tab in ASIDE_TABS.filter(tab => tab !== 'about')"
       :key="tab"
       :data-active="tab === asideState"
+      :aria-label="`Toggle ${tab} tab`"
       class="relative size-12 bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:text-foreground"
       variant="ghost"
       @click="handleTabClick(tab)"
@@ -50,6 +51,7 @@ const tabMap: Record<Exclude<typeof ASIDE_TABS[number], 'about'>, { icon: string
     <div class="flex-1" />
 
     <UButton
+      :aria-label="$colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'"
       class="relative size-12 bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:bg-muted data-[active=true]:text-foreground"
       variant="ghost"
       @click="$colorMode.value === 'dark' ? $colorMode.value = 'light' : $colorMode.value = 'dark'"
@@ -65,6 +67,7 @@ const tabMap: Record<Exclude<typeof ASIDE_TABS[number], 'about'>, { icon: string
     </UButton>
     <UButton
       :data-active="asideState === 'about'"
+      aria-label="Toggle about tab"
       class="relative size-12 bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:bg-muted data-[active=true]:text-foreground"
       variant="ghost"
       @click="handleTabClick('about')"
