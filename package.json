@@ -34,6 +34,7 @@
     "nuxt-auth-utils": "0.5.25",
     "nuxt-posthog": "1.6.3",
     "nuxt-security": "^2.4.0",
+    "nuxt-vitalizer": "2.0.0",
     "p-limit": "^7.1.1",
     "reka-ui": "^2.5.0",
     "tailwind-merge": "^3.3.1",

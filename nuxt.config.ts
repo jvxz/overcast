@@ -63,6 +63,7 @@ export default defineNuxtConfig({
     'nuxt-auth-utils',
     '@nuxtjs/seo',
     'nuxt-posthog',
+    'nuxt-vitalizer',
   ],
 
   nitro: {
