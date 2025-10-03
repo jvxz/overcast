@@ -5,7 +5,7 @@ const searchQuery = useArtistSearch()
 const artistUrl = useArtist()
 const formMode = useFormMode()
 
-const { data: artistData, error } = useQuery({
+const { data: artistData, error, isPending: isPendingArtistData } = useQuery({
   enabled: () => !!artistUrl.value,
   queryFn: async () => $fetch('/api/user/meta', {
     onResponse: handleResponseError,
@@ -45,15 +45,14 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
   <div class="flex h-full w-full flex-col items-center gap-4">
     <div class="flex w-full items-center gap-2">
       <div class="relative w-full">
-        <div class="relative">
+        <ProgressBar :progress="zippingProgress">
           <UInput
             v-model="searchQuery"
             :disabled="!hasTracks || isDownloadingArtistTracks"
             :placeholder
             class="pl-8"
           />
-          <div class="absolute inset-0 z-100 h-full bg-muted/50 p-0 mix-blend-screen duration-100" :style="{ width: `${zippingProgress}%` }"></div>
-        </div>
+        </ProgressBar>
         <USpinner v-if="isLoading" class="absolute inset-0 top-1/2 left-2 z-10 !size-5 -translate-y-1/2" />
         <Icon
           v-else
@@ -73,14 +72,13 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
     </div>
     <div class="relative h-full w-full">
       <Transition>
-        <AsideContentArtistList v-if="artistUrl" @pending="pending = $event" />
-        <div v-else-if="!artistUrl" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+        <div v-if="!isPendingArtistData && !artistData?.track_count" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
           <Icon name="mingcute:ghost-line" class="!size-16" />
           <h1 class="text-lg font-medium">
-            Artist not selected
+            artist has no tracks
           </h1>
           <p class="w-xs text-center md:w-sm" style="text-wrap: balance;">
-            Select an artist by switching to artist mode and entering their url
+            consider selecting a different artist
           </p>
           <UButton
             variant="soft"
@@ -94,13 +92,14 @@ const isLoading = computed(() => pending.value || isDownloadingArtistTracks.valu
             Switch to artist mode
           </UButton>
         </div>
-        <div v-else-if="!artistData?.track_count" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
+        <AsideContentArtistList v-else-if="artistUrl" @pending="pending = $event" />
+        <div v-else-if="!artistUrl" class="absolute inset-0 flex h-full flex-col items-center justify-center gap-2 text-muted-foreground">
           <Icon name="mingcute:ghost-line" class="!size-16" />
           <h1 class="text-lg font-medium">
-            Artist has no tracks
+            No artist selected
           </h1>
           <p class="w-xs text-center md:w-sm" style="text-wrap: balance;">
-            Consider selecting a different artist
+            Select an artist by switching to artist mode and entering their url
           </p>
           <UButton
             variant="soft"
