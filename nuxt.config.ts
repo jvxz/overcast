@@ -130,6 +130,12 @@ export default defineNuxtConfig({
     sri: false, // for bundled font files
   },
 
+  seo: {
+    meta: {
+      description: 'overcast is an advanced archiving tool for SoundCloud.',
+    },
+  },
+
   site: {
     name: 'overcast',
   },
