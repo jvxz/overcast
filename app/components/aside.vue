@@ -50,6 +50,20 @@ const tabMap: Record<Exclude<typeof ASIDE_TABS[number], 'about'>, { icon: string
     <div class="flex-1" />
 
     <UButton
+      class="relative size-12 bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:bg-muted data-[active=true]:text-foreground"
+      variant="ghost"
+      @click="$colorMode.value === 'dark' ? $colorMode.value = 'light' : $colorMode.value = 'dark'"
+    >
+      <Icon
+        :name="$colorMode.unknown
+          ? 'mingcute:moonlight-line'
+          : $colorMode.value === 'dark'
+            ? 'mingcute:moon-line'
+            : 'mingcute:sun-line'"
+        class="z-10 !size-8"
+      />
+    </UButton>
+    <UButton
       :data-active="asideState === 'about'"
       class="relative size-12 bg-transparent hover:bg-muted/50 active:bg-muted/60 disabled:opacity-100 data-[active=true]:bg-muted data-[active=true]:text-foreground"
       variant="ghost"
