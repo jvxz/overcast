@@ -98,6 +98,7 @@ export default defineNuxtConfig({
   },
 
   posthog: {
+    disabled: true,
     proxy: true,
   },
 
