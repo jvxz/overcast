@@ -29,7 +29,7 @@
     "clsx": "^2.1.1",
     "focus-trap": "^7.6.5",
     "minio": "^8.0.6",
-    "motion-v": "^1.7.1",
+    "motion-v": "^1.7.2",
     "nuxt": "^4.1.1",
     "nuxt-auth-utils": "0.5.25",
     "nuxt-posthog": "1.6.3",
