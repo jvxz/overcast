@@ -87,8 +87,8 @@ importers:
         specifier: ^7.1.1
         version: 7.1.1
       reka-ui:
-        specifier: ^2.5.0
-        version: 2.5.0(typescript@5.9.2)(vue@3.5.21(typescript@5.9.2))
+        specifier: ^2.5.1
+        version: 2.5.1(typescript@5.9.2)(vue@3.5.21(typescript@5.9.2))
       tailwind-merge:
         specifier: ^3.3.1
         version: 3.3.1
@@ -853,8 +853,8 @@ packages:
     peerDependencies:
       vue: '>=3'
 
-  '@internationalized/date@3.9.0':
-    resolution: {integrity: sha512-yaN3brAnHRD+4KyyOsJyk49XUvj2wtbNACSqg0bz3u8t2VuzhC8Q5dfRnrSxjnnbDb+ienBnkn1TzQfE154vyg==}
+  '@internationalized/date@3.10.0':
+    resolution: {integrity: sha512-oxDR/NTEJ1k+UFVQElaNIk65E/Z83HK1z1WI3lQyhTtnNg4R5oVXaPzK3jcpKG8UHKDVuDQHzn+wsxSz8RP3aw==}
 
   '@internationalized/number@3.6.5':
     resolution: {integrity: sha512-6hY4Kl4HPBvtfS62asS/R22JzNNy8vi/Ssev7x6EobfCp+9QIB2hKvI2EtbdJ0VSQacxVNtqhE/NmF/NZ0gm6g==}
@@ -5608,8 +5608,8 @@ packages:
     resolution: {integrity: sha512-cnE+y8bz4NhMjISKbgeVJtqNbtf5QpjZP+Bslo+UqkIt9QPnX9q095eiRRASJG1/tz6dlNr6Z5NsBiWYokp6EQ==}
     hasBin: true
 
-  reka-ui@2.5.0:
-    resolution: {integrity: sha512-81aMAmJeVCy2k0E6x7n1kypDY6aM1ldLis5+zcdV1/JtoAlSDck5OBsyLRJU9CfgbrQp1ImnRnBSmC4fZ2fkZQ==}
+  reka-ui@2.5.1:
+    resolution: {integrity: sha512-QJGB3q21wQ1Kw28HhhNDpjfFe8qpePX1gK4FTBRd68XTh9aEnhR5bTJnlV0jxi8FBPh0xivZBeNFUc3jiGx7mQ==}
     peerDependencies:
       vue: '>= 3.2.0'
 
@@ -7422,7 +7422,7 @@ snapshots:
       '@iconify/types': 2.0.0
       vue: 3.5.21(typescript@5.9.2)
 
-  '@internationalized/date@3.9.0':
+  '@internationalized/date@3.10.0':
     dependencies:
       '@swc/helpers': 0.5.17
 
@@ -13224,11 +13224,11 @@ snapshots:
     dependencies:
       jsesc: 3.0.2
 
-  reka-ui@2.5.0(typescript@5.9.2)(vue@3.5.21(typescript@5.9.2)):
+  reka-ui@2.5.1(typescript@5.9.2)(vue@3.5.21(typescript@5.9.2)):
     dependencies:
       '@floating-ui/dom': 1.7.4
       '@floating-ui/vue': 1.1.9(vue@3.5.21(typescript@5.9.2))
-      '@internationalized/date': 3.9.0
+      '@internationalized/date': 3.10.0
       '@internationalized/number': 3.6.5
       '@tanstack/vue-virtual': 3.13.12(vue@3.5.21(typescript@5.9.2))
       '@vueuse/core': 12.8.2(typescript@5.9.2)
